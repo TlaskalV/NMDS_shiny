@@ -3,6 +3,7 @@
 library(shiny)
 library(readxl)
 library(tidyverse)
+library(dplyr)
 
   ui <- fluidPage(
     sidebarLayout(
@@ -30,14 +31,15 @@ library(tidyverse)
         h4(textOutput("caption1")),
         tableOutput("contents1"),
         h4(textOutput("caption2")),
-        tableOutput("contents2")
+        tableOutput("contents2"),
+        tableOutput("contents3")
       )
     )
   )
   
   server <- function(input, output) {
     #otu
-    dataset_otu = reactive({
+    dataset_otu <- reactive({
       infile = input$otu  
       
       if (is.null(infile))
@@ -48,7 +50,7 @@ library(tidyverse)
     })
     
     #samples
-    dataset_samples = reactive({
+    dataset_samples <- reactive({
       infile = input$samples  
       
       if (is.null(infile))
@@ -84,6 +86,23 @@ library(tidyverse)
         write.csv(dataset_otu(), file, row.names = FALSE, sep = ";")
       }
     )
+    
+    filtered <- reactive({
+      otus_percent <- dataset_otu()
+      tbl_df(otus_percent) %>% gather(sample, per, (2:ncol(otus_percent))) %>% 
+        group_by_at(c(1,2)) %>%  
+        filter(per > 6) %>%
+        ungroup() %>% 
+        group_by_at(c(1)) %>% 
+        dplyr::summarise(treshold_count = n()) %>%
+        filter(treshold_count > 5) %>% 
+        select(c(1))
+    })
+    
+    output$contents3 <- renderTable({
+      filtered()
+    })
+    
   }
   
   shinyApp(ui, server)
