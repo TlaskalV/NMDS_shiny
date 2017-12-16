@@ -4,6 +4,7 @@ library(shiny)
 library(readxl)
 library(tidyverse)
 library(dplyr)
+library(vegan)
 
   ui <- fluidPage(
     sidebarLayout(
@@ -23,7 +24,7 @@ library(dplyr)
                   placeholder = "name of the sheet"),
         tags$hr(),
         tags$hr(),
-        sliderInput("percent_treshold", "Percent treshold per sample", 0, 100, c(3), post = "%"),
+        sliderInput("percent_treshold", "Percent treshold per sample", 0.5, 100, c(3), post = "%", step = 0.5),
         numericInput("no_samples", "Number of samples with >= of treshold %", value = 3, min = NA, max = NA, step = 1),
         downloadButton("downloadMultivar", "Download table ready for NMDS"),
         tags$hr(),
@@ -36,7 +37,7 @@ library(dplyr)
         tableOutput("contents2"),
         tableOutput("contents3"),
         tableOutput("contents4"),
-        tableOutput("contents5")
+        plotOutput("contents6")
       )
     )
   )
@@ -115,7 +116,6 @@ library(dplyr)
       tbl_df(otus_percent) %>% gather(sample, per, (2:ncol(otus_percent))) %>%
         right_join(filtered_titles_list) %>% 
         spread(sample, per) 
-       
     })
     
     output$contents4 <- renderTable({
@@ -129,7 +129,6 @@ library(dplyr)
       #cluster <- otus_multivar[,1]
       #rownames(as.data.frame(otus_multivar)) = cluster
       otus_multivar <- t(otus_multivar[ , 2:ncol(otus_multivar)])
-      
     })
      
     #vegan matrix download
@@ -139,13 +138,29 @@ library(dplyr)
       },
       content = function(file) {
         write.csv(otus_multivar_for_plot(), file, row.names = TRUE, sep = ";")
-      })
+    })
     
     output$contents5 <- renderTable({
       otus_multivar_for_plot()
     })
     
+    mdsord <- reactive({
+      otus_multivar_for_plot <- otus_multivar_for_plot()
+      set.seed(31)
+      mdsord = metaMDS(comm = otus_multivar_for_plot, distance = "bray", trace = FALSE, k = 2, trymax = 200)
+      if(input$hellinger) {
+      set.seed(31)
+      mdsord = metaMDS(comm = decostand(otus_multivar_for_plot, "hellinger"), distance = "bray", trace = FALSE, k = 2, trymax = 200)
+      }
+      plot(mdsord, disp = "sites", type = "p")
+      #zof.NMDS.data <- dataset_samples()
+      #zof.NMDS.data$NMDS1<-mdsord$points[ ,1]
+      #zof.NMDS.data$NMDS2<-mdsord$points[ ,2]
+    })
     
+    output$contents6 <- renderPlot({
+      mdsord()
+    })
     
   }
   
