@@ -25,6 +25,8 @@ library(dplyr)
         tags$hr(),
         sliderInput("percent_treshold", "Percent treshold per sample", 0, 100, c(3), post = "%"),
         numericInput("no_samples", "Number of samples with >= of treshold %", value = 3, min = NA, max = NA, step = 1),
+        downloadButton("downloadMultivar", "Download table ready for NMDS"),
+        tags$hr(),
         checkboxInput("hellinger", "Hellinger transformation of OTU table", value = FALSE)
       ),
       mainPanel(
@@ -32,7 +34,9 @@ library(dplyr)
         tableOutput("contents1"),
         h4(textOutput("caption2")),
         tableOutput("contents2"),
-        tableOutput("contents3")
+        tableOutput("contents3"),
+        tableOutput("contents4"),
+        tableOutput("contents5")
       )
     )
   )
@@ -84,24 +88,64 @@ library(dplyr)
       },
       content = function(file) {
         write.csv(dataset_otu(), file, row.names = FALSE, sep = ";")
-      }
-    )
+      })
     
-    filtered <- reactive({
+    #filtr procent
+    filtered_titles <- reactive({
       otus_percent <- dataset_otu()
       tbl_df(otus_percent) %>% gather(sample, per, (2:ncol(otus_percent))) %>% 
         group_by_at(c(1,2)) %>%  
-        filter(per > 6) %>%
+        filter(per >= input$percent_treshold) %>%
         ungroup() %>% 
         group_by_at(c(1)) %>% 
         dplyr::summarise(treshold_count = n()) %>%
-        filter(treshold_count > 5) %>% 
+        filter(treshold_count >= input$no_samples) %>% 
         select(c(1))
     })
     
     output$contents3 <- renderTable({
-      filtered()
+      filtered_titles()
+      
     })
+    
+    #filtr multivar OTUs
+    otus_multivar <- reactive({
+      filtered_titles_list <- filtered_titles()
+      otus_percent <- dataset_otu()
+      tbl_df(otus_percent) %>% gather(sample, per, (2:ncol(otus_percent))) %>%
+        right_join(filtered_titles_list) %>% 
+        spread(sample, per) 
+       
+    })
+    
+    output$contents4 <- renderTable({
+      otus_multivar()
+    })
+    
+    #vegan matrix 
+    otus_multivar_for_plot <- reactive({
+      filtered_titles_list <- filtered_titles()
+      otus_multivar <- otus_multivar()
+      #cluster <- otus_multivar[,1]
+      #rownames(as.data.frame(otus_multivar)) = cluster
+      otus_multivar <- t(otus_multivar[ , 2:ncol(otus_multivar)])
+      
+    })
+     
+    #vegan matrix download
+    output$downloadMultivar <- downloadHandler(
+      filename = function() {
+        paste(input$otu, ".csv", sep = "")
+      },
+      content = function(file) {
+        write.csv(otus_multivar_for_plot(), file, row.names = TRUE, sep = ";")
+      })
+    
+    output$contents5 <- renderTable({
+      otus_multivar_for_plot()
+    })
+    
+    
     
   }
   
