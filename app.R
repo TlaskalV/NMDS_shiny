@@ -26,10 +26,14 @@ library(vegan)
         numericInput("no_samples", "Number of samples with >= of treshold %", value = 3, min = 1, step = 1),
         h6("Max number of samples:"),
         verbatimTextOutput("sample_range"),
+        uiOutput("grouping_factor"),
         downloadButton("downloadMultivar", "Download table ready for NMDS"),
         tags$hr(style="border-color: black;"),
         checkboxInput("hellinger", "Hellinger transformation of OTU table", value = FALSE),
-        downloadButton("downloadMultivarFinal", "Download final NMDS table")
+        downloadButton("downloadMultivarFinal", "Download final NMDS points as .csv"),
+        tags$br(),
+        tags$br(),
+        downloadButton("downloadPlotFinal", "Download final plot as .pdf")
       ),
       mainPanel(
         h4(textOutput("caption1")),
@@ -45,6 +49,9 @@ library(vegan)
   )
   
   server <- function(input, output) {
+    
+    options(shiny.maxRequestSize=30*1024^2)
+    
     #otu
     dataset_otu <- reactive({
       infile = input$otu  
@@ -67,6 +74,7 @@ library(vegan)
       
     })
     
+    # total number of samples
     samples_count <- reactive({
      number = nrow(dataset_samples())
      })
@@ -183,16 +191,32 @@ library(vegan)
         write.csv(mdsord(), file, row.names = TRUE, sep = ";")
       })
     
+    output$grouping_factor <- renderUI({
+      selectInput("grouping_factor_input", "Grouping factor",
+                  sort(colnames(dataset_samples())),
+                  selected = NULL)
+    })
+    
     #ggplot NMDS
-    mdsord_final<- reactive({
+    mdsord_final <- reactive({
       NMDS_data_final <- mdsord()
-      ggplot(data = NMDS_data_final, aes(y = NMDS_y, x = NMDS_x)) + 
-        geom_point(aes(colour = tree), show.legend = TRUE, size = 4.5)
+      ggplot(data = mdsord(), aes(y = NMDS_y, x = NMDS_x)) + 
+        geom_point(aes_string(colour = input$grouping_factor_input), show.legend = TRUE, size = 4.5) +
+        theme_bw() +
+        ggtitle("NMDS plot")
       })
     
     output$contents5 <- renderPlot({
       mdsord_final()
-    })
+      })
+    
+    #download NMDS
+    output$downloadPlotFinal <- downloadHandler(
+      filename = function() { paste(input$otu, '.pdf', sep='') },
+      content = function(file) {
+        ggsave(file, plot = mdsord_final(), device = "pdf", dpi = 300, height = 210, width = 297, units = "mm")
+      }
+    )
     
     }
   
