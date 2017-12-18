@@ -7,21 +7,26 @@ library(dplyr)
 library(vegan)
 
   ui <- fluidPage(
+    titlePanel("NMDS app"),
     sidebarLayout(
       sidebarPanel(
+        h4("1."),
         fileInput('otu', 'Choose OTU table',
                   accept=c('sheetName', 'header'), multiple=FALSE),
         checkboxInput('header_otu', 'Header', TRUE),
         textInput('sheet_otu', 'Exact name of the excel sheet',
                   placeholder = "name of the sheet"),
+        
         downloadButton("downloadData", "Download OTU table"),
         tags$hr(style="border-color: black;"),
+        h4("2."),
         fileInput('samples', 'Choose sample list',
                   accept=c('sheetName', 'header'), multiple=FALSE),
         checkboxInput('header_samples', 'Header', TRUE),
         textInput('sheet_samples', 'Exact name of the excel sheet',
                   placeholder = "name of the sheet"),
         tags$hr(style="border-color: black;"),
+        h4("3."),
         sliderInput("percent_treshold", "Percent treshold per sample", 0.5, 100, c(3), post = "%", step = 0.5),
         numericInput("no_samples", "Number of samples with >= of treshold %", value = 3, min = 1, step = 1),
         h6("Max number of samples:"),
@@ -29,11 +34,15 @@ library(vegan)
         uiOutput("grouping_factor"),
         downloadButton("downloadMultivar", "Download table ready for NMDS"),
         tags$hr(style="border-color: black;"),
+        h4("4."),
         checkboxInput("hellinger", "Hellinger transformation of OTU table", value = FALSE),
         downloadButton("downloadMultivarFinal", "Download final NMDS points as .csv"),
         tags$br(),
         tags$br(),
-        downloadButton("downloadPlotFinal", "Download final plot as .pdf")
+        downloadButton("downloadPlotFinal", "Download final plot as .pdf"),
+        tags$hr(style="border-color: black;"),
+        "packages: tidyverse, vegan",
+        a("You can find sample input files here", href = "https://github.com/Vojczech/NMDS_shiny")
       ),
       mainPanel(
         h5(textOutput("caption1")),
