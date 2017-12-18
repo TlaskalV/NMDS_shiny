@@ -28,7 +28,8 @@ library(vegan)
         verbatimTextOutput("sample_range"),
         downloadButton("downloadMultivar", "Download table ready for NMDS"),
         tags$hr(style="border-color: black;"),
-        checkboxInput("hellinger", "Hellinger transformation of OTU table", value = FALSE)
+        checkboxInput("hellinger", "Hellinger transformation of OTU table", value = FALSE),
+        downloadButton("downloadMultivarFinal", "Download final NMDS table")
       ),
       mainPanel(
         h4(textOutput("caption1")),
@@ -37,8 +38,8 @@ library(vegan)
         tableOutput("contents2"),
         tableOutput("contents3"),
         tableOutput("contents4"),
-        plotOutput("contents6"),
-        tableOutput("contents8")
+        plotOutput("contents5"),
+        tableOutput("contents6")
       )
     )
   )
@@ -162,21 +163,36 @@ library(vegan)
       set.seed(31)
       mdsord = metaMDS(comm = decostand(otus_multivar_for_plot, "hellinger"), distance = "bray", trace = FALSE, k = 2, trymax = 200)
       }
-      plot(mdsord, disp = "sites", type = "p")
+      #plot(mdsord, disp = "sites", type = "p")
       NMDS_data <- dataset_samples()
       NMDS_x <- mdsord$points[ ,1]  
       NMDS_y <- mdsord$points[ ,2]
       NMDS_data_final <- cbind(NMDS_data, NMDS_x, NMDS_y)
+    })
+    
+    output$contents6 <- renderTable({
+      mdsord()
+    })
+    
+    #NMDS final matrix download
+    output$downloadMultivarFinal <- downloadHandler(
+      filename = function() {
+        paste(input$otu, ".csv", sep = "")
+      },
+      content = function(file) {
+        write.csv(mdsord(), file, row.names = TRUE, sep = ";")
       })
     
-    output$contents6 <- renderPlot({
-      mdsord()
-    })
+    #ggplot NMDS
+    mdsord_final<- reactive({
+      NMDS_data_final <- mdsord()
+      ggplot(data = NMDS_data_final, aes(y = NMDS_y, x = NMDS_x)) + 
+        geom_point(aes(colour = tree), show.legend = TRUE, size = 4.5)
+      })
     
-    output$contents8 <- renderTable({
-      mdsord()
+    output$contents5 <- renderPlot({
+      mdsord_final()
     })
-    
     
     }
   
