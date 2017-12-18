@@ -15,19 +15,17 @@ library(vegan)
         textInput('sheet_otu', 'Exact name of the excel sheet',
                   placeholder = "name of the sheet"),
         downloadButton("downloadData", "Download OTU table"),
-        tags$hr(),
-        tags$hr(),
+        tags$hr(style="border-color: black;"),
         fileInput('samples', 'Choose sample list',
                   accept=c('sheetName', 'header'), multiple=FALSE),
         checkboxInput('header_samples', 'Header', TRUE),
         textInput('sheet_samples', 'Exact name of the excel sheet',
                   placeholder = "name of the sheet"),
-        tags$hr(),
-        tags$hr(),
+        tags$hr(style="border-color: black;"),
         sliderInput("percent_treshold", "Percent treshold per sample", 0.5, 100, c(3), post = "%", step = 0.5),
-        numericInput("no_samples", "Number of samples with >= of treshold %", value = 3, min = NA, max = NA, step = 1),
+        numericInput("no_samples", "Number of samples with >= of treshold %", value = 3, min = 1, max = , step = 1),
         downloadButton("downloadMultivar", "Download table ready for NMDS"),
-        tags$hr(),
+        tags$hr(style="border-color: black;"),
         checkboxInput("hellinger", "Hellinger transformation of OTU table", value = FALSE)
       ),
       mainPanel(
@@ -37,7 +35,8 @@ library(vegan)
         tableOutput("contents2"),
         tableOutput("contents3"),
         tableOutput("contents4"),
-        plotOutput("contents6")
+        plotOutput("contents6"),
+        textOutput("contents8")
       )
     )
   )
@@ -63,6 +62,15 @@ library(vegan)
       
       readxl::read_excel(infile$datapath, sheet = input$sheet_samples, col_names = input$header_samples)
       
+    })
+    
+    samples_count <- reactive({
+     number = nrow(dataset_samples())
+      
+    })
+    
+    output$contents8 <- renderText({
+      samples_count()
     })
     
     #text a tabulka
@@ -144,6 +152,7 @@ library(vegan)
       otus_multivar_for_plot()
     })
     
+    #NMDS
     mdsord <- reactive({
       otus_multivar_for_plot <- otus_multivar_for_plot()
       set.seed(31)
