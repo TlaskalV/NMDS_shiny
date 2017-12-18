@@ -23,7 +23,10 @@ library(vegan)
                   placeholder = "name of the sheet"),
         tags$hr(style="border-color: black;"),
         sliderInput("percent_treshold", "Percent treshold per sample", 0.5, 100, c(3), post = "%", step = 0.5),
-        numericInput("no_samples", "Number of samples with >= of treshold %", value = 3, min = 1, max = , step = 1),
+        uiOutput("no_samples"),
+        #numericInput("no_samples", "Number of samples with >= of treshold %", value = 3, min = 1, max = , step = 1),
+        h6("Total number of samples"),
+        verbatimTextOutput("sample_range"),
         downloadButton("downloadMultivar", "Download table ready for NMDS"),
         tags$hr(style="border-color: black;"),
         checkboxInput("hellinger", "Hellinger transformation of OTU table", value = FALSE)
@@ -72,6 +75,14 @@ library(vegan)
     output$contents8 <- renderText({
       samples_count()
     })
+    
+    output$no_samples <- renderUI({
+      numericInput("inNumeric", "Number of samples with >= of treshold %", min = 1, max = samples_count(), value = 3, step = 1)
+      })
+    
+    output$sample_range <- renderText({ 
+      samples_count() 
+      })
     
     #text a tabulka
     output$caption1 <- renderText({
