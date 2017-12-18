@@ -69,13 +69,9 @@ library(vegan)
     
     samples_count <- reactive({
      number = nrow(dataset_samples())
-      
-    })
+     })
     
-    output$contents8 <- renderText({
-      samples_count()
-    })
-    
+    #numeric input with automatic maximum
     output$no_samples <- renderUI({
       numericInput("inNumeric", "Number of samples with >= of treshold %", min = 1, max = samples_count(), value = 3, step = 1)
       })
