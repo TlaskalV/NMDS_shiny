@@ -23,9 +23,8 @@ library(vegan)
                   placeholder = "name of the sheet"),
         tags$hr(style="border-color: black;"),
         sliderInput("percent_treshold", "Percent treshold per sample", 0.5, 100, c(3), post = "%", step = 0.5),
-        uiOutput("no_samples"),
-        #numericInput("no_samples", "Number of samples with >= of treshold %", value = 3, min = 1, max = , step = 1),
-        h6("Total number of samples"),
+        numericInput("no_samples", "Number of samples with >= of treshold %", value = 3, min = 1, step = 1),
+        h6("Max number of samples:"),
         verbatimTextOutput("sample_range"),
         downloadButton("downloadMultivar", "Download table ready for NMDS"),
         tags$hr(style="border-color: black;"),
@@ -39,7 +38,7 @@ library(vegan)
         tableOutput("contents3"),
         tableOutput("contents4"),
         plotOutput("contents6"),
-        textOutput("contents8")
+        tableOutput("contents8")
       )
     )
   )
@@ -70,11 +69,6 @@ library(vegan)
     samples_count <- reactive({
      number = nrow(dataset_samples())
      })
-    
-    #numeric input with automatic maximum
-    output$no_samples <- renderUI({
-      numericInput("inNumeric", "Number of samples with >= of treshold %", min = 1, max = samples_count(), value = 3, step = 1)
-      })
     
     output$sample_range <- renderText({ 
       samples_count() 
@@ -169,15 +163,21 @@ library(vegan)
       mdsord = metaMDS(comm = decostand(otus_multivar_for_plot, "hellinger"), distance = "bray", trace = FALSE, k = 2, trymax = 200)
       }
       plot(mdsord, disp = "sites", type = "p")
-      #zof.NMDS.data <- dataset_samples()
-      #zof.NMDS.data$NMDS1<-mdsord$points[ ,1]
-      #zof.NMDS.data$NMDS2<-mdsord$points[ ,2]
-    })
+      NMDS_data <- dataset_samples()
+      NMDS_x <- mdsord$points[ ,1]  
+      NMDS_y <- mdsord$points[ ,2]
+      NMDS_data_final <- cbind(NMDS_data, NMDS_x, NMDS_y)
+      })
     
     output$contents6 <- renderPlot({
       mdsord()
     })
     
-  }
+    output$contents8 <- renderTable({
+      mdsord()
+    })
+    
+    
+    }
   
   shinyApp(ui, server)
