@@ -1,4 +1,4 @@
-#### hlavicka pro formatovani header a delimiter v uploadu xlsx file ####
+#### NMDS plot ####
 
 library(shiny)
 library(readxl)
@@ -36,14 +36,11 @@ library(vegan)
         downloadButton("downloadPlotFinal", "Download final plot as .pdf")
       ),
       mainPanel(
-        h4(textOutput("caption1")),
+        h5(textOutput("caption1")),
         tableOutput("contents1"),
-        h4(textOutput("caption2")),
+        h5(textOutput("caption2")),
         tableOutput("contents2"),
-        tableOutput("contents3"),
-        tableOutput("contents4"),
-        plotOutput("contents5"),
-        tableOutput("contents6")
+        plotOutput("contents5")
       )
     )
   )
@@ -122,11 +119,6 @@ library(vegan)
         select(c(1))
     })
     
-    output$contents3 <- renderTable({
-      filtered_titles()
-      
-    })
-    
     #filtr multivar OTUs
     otus_multivar <- reactive({
       filtered_titles_list <- filtered_titles()
@@ -134,10 +126,6 @@ library(vegan)
       tbl_df(otus_percent) %>% gather(sample, per, (2:ncol(otus_percent))) %>%
         right_join(filtered_titles_list) %>% 
         spread(sample, per) 
-    })
-    
-    output$contents4 <- renderTable({
-      otus_multivar()
     })
     
     #vegan matrix 
@@ -158,10 +146,6 @@ library(vegan)
         write.csv(otus_multivar_for_plot(), file, row.names = TRUE, sep = ";")
     })
     
-    output$contents5 <- renderTable({
-      otus_multivar_for_plot()
-    })
-    
     #NMDS
     mdsord <- reactive({
       otus_multivar_for_plot <- otus_multivar_for_plot()
@@ -176,10 +160,6 @@ library(vegan)
       NMDS_x <- mdsord$points[ ,1]  
       NMDS_y <- mdsord$points[ ,2]
       NMDS_data_final <- cbind(NMDS_data, NMDS_x, NMDS_y)
-    })
-    
-    output$contents6 <- renderTable({
-      mdsord()
     })
     
     #NMDS final matrix download
