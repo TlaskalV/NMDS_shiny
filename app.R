@@ -14,7 +14,9 @@ library(vegan)
         fileInput('otu', 'Choose OTU table',
                   accept=c('sheetName', 'header'), multiple=FALSE),
         checkboxInput('header_otu', 'Header', TRUE),
-        textInput('sheet_otu', 'Exact name of the excel sheet',
+        a("example", href = "https://github.com/Vojczech/NMDS_shiny", target="_blank"),
+        tags$br(),
+        textInput('sheet_otu', 'Exact name of the excel sheet (required)',
                   placeholder = "name of the sheet"),
         
         downloadButton("downloadData", "Download OTU table"),
@@ -23,12 +25,12 @@ library(vegan)
         fileInput('samples', 'Choose sample list',
                   accept=c('sheetName', 'header'), multiple=FALSE),
         checkboxInput('header_samples', 'Header', TRUE),
-        textInput('sheet_samples', 'Exact name of the excel sheet',
+        textInput('sheet_samples', 'Exact name of the excel sheet (required)',
                   placeholder = "name of the sheet"),
         tags$hr(style="border-color: black;"),
         h4("3."),
-        sliderInput("percent_treshold", "Percent treshold per sample", 0.5, 100, c(3), post = "%", step = 0.5),
-        numericInput("no_samples", "Number of samples with >= of treshold %", value = 3, min = 1, step = 1),
+        sliderInput("percent_treshold", "Filter OTUs by percentage per sample", 0.5, 100, c(3), post = "%", step = 0.5),
+        numericInput("no_samples", "Number of samples with percentage >= upper value", value = 3, min = 1, step = 1),
         h6("Max number of samples:"),
         verbatimTextOutput("sample_range"),
         uiOutput("grouping_factor"),
@@ -42,7 +44,8 @@ library(vegan)
         downloadButton("downloadPlotFinal", "Download final plot as .pdf"),
         tags$hr(style="border-color: black;"),
         "packages: tidyverse, vegan",
-        a("You can find sample input files here", href = "https://github.com/Vojczech/NMDS_shiny")
+        tags$br(),
+        a("You can find example input files here", href = "https://github.com/Vojczech/NMDS_shiny", target="_blank")
       ),
       mainPanel(
         h5(textOutput("caption1")),
@@ -91,7 +94,7 @@ library(vegan)
     
     #text a tabulka
     output$caption1 <- renderText({
-      "first 5 rows of OTU table"
+      "first 5 rows of OTU table are displayed"
     })
     
     output$contents1 <- renderTable({
@@ -100,7 +103,7 @@ library(vegan)
     
     #text a tabulka
     output$caption2 <- renderText({
-      "first 5 rows of sample table"
+      "first 5 rows of sample table are displayed"
     })
     output$contents2 <- renderTable({
       head(dataset_samples(), 5)
