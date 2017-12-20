@@ -16,7 +16,7 @@ library(vegan)
         checkboxInput('header_otu', 'Header', TRUE),
         a("example", href = "https://github.com/Vojczech/NMDS_shiny", target="_blank"),
         tags$br(),
-        textInput('sheet_otu', 'Exact name of the excel sheet',
+        textInput('sheet_otu', 'Exact name of the excel sheet (required)',
                   placeholder = "name of the sheet"),
         
         downloadButton("downloadData", "Download OTU table"),
@@ -25,7 +25,7 @@ library(vegan)
         fileInput('samples', 'Choose sample list',
                   accept=c('sheetName', 'header'), multiple=FALSE),
         checkboxInput('header_samples', 'Header', TRUE),
-        textInput('sheet_samples', 'Exact name of the excel sheet',
+        textInput('sheet_samples', 'Exact name of the excel sheet (required)',
                   placeholder = "name of the sheet"),
         tags$hr(style="border-color: black;"),
         h4("3."),
