@@ -20,4 +20,11 @@ Two excel files/sheets are necessary:
 |  sample2   |  2   |   fagus  | 2014     | 
 |    sample3     |   1    |  picea   |     2015   | 
 
-Its possible to filter OTUs for NMDS construction by abundance treshold in certain number of samples.
++ After upload of the tables it is necessary to choose the correct excel sheet by its name 
+
++ It is possible to filter OTUs for NMDS construction by abundance treshold in certain number of samples.
+
++ [Hellinger transformation](http://mb3is.megx.net/gustame/reference/dissimilarity) as optional approach for lowering influence of rare OTUs
+
++ It is possible to download .csv tables with NMDS values for your own analysis 
+ 
