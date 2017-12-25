@@ -6,13 +6,15 @@ library(tidyverse)
 library(dplyr)
 library(vegan)
 
+
+#### ui ####
   ui <- fluidPage(
     titlePanel("NMDS app"),
     sidebarLayout(
       sidebarPanel(
         h4("1."),
         fileInput('otu', 'Choose OTU table',
-                  accept=c('sheetName', 'header'), multiple=FALSE),
+                  accept = c('sheetName', 'header'), multiple = FALSE),
         checkboxInput('header_otu', 'Header', TRUE),
         a("example", href = "https://github.com/Vojczech/NMDS_shiny", target="_blank"),
         tags$br(),
@@ -20,14 +22,14 @@ library(vegan)
                   placeholder = "name of the sheet"),
         
         downloadButton("downloadData", "Download OTU table"),
-        tags$hr(style="border-color: black;"),
+        tags$hr(style = "border-color: black;"),
         h4("2."),
         fileInput('samples', 'Choose sample list',
-                  accept=c('sheetName', 'header'), multiple=FALSE),
+                  accept = c('sheetName', 'header'), multiple = FALSE),
         checkboxInput('header_samples', 'Header', TRUE),
         textInput('sheet_samples', 'Exact name of the excel sheet (required)',
                   placeholder = "name of the sheet"),
-        tags$hr(style="border-color: black;"),
+        tags$hr(style = "border-color: black;"),
         h4("3."),
         sliderInput("percent_treshold", "Filter OTUs by percentage per sample", 0.5, 100, c(3), post = "%", step = 0.5),
         numericInput("no_samples", "Number of samples with percentage >= upper value", value = 3, min = 1, step = 1),
@@ -42,7 +44,7 @@ library(vegan)
         tags$br(),
         tags$br(),
         downloadButton("downloadPlotFinal", "Download final plot as .pdf"),
-        tags$hr(style="border-color: black;"),
+        tags$hr(style = "border-color: black;"),
         "packages: tidyverse, vegan",
         tags$br(),
         a("You can find example input files here", href = "https://github.com/Vojczech/NMDS_shiny", target="_blank")
@@ -56,7 +58,9 @@ library(vegan)
       )
     )
   )
+
   
+#### server ####  
   server <- function(input, output) {
     
     options(shiny.maxRequestSize=30*1024^2)
@@ -92,7 +96,7 @@ library(vegan)
       samples_count() 
       })
     
-    #text a tabulka
+    # text and table
     output$caption1 <- renderText({
       "first 5 rows of OTU table are displayed"
     })
@@ -101,15 +105,15 @@ library(vegan)
       head(dataset_otu(), 5)
     })
     
-    #text a tabulka
+    # text and table
     output$caption2 <- renderText({
       "first 5 rows of sample table are displayed"
     })
     output$contents2 <- renderTable({
       head(dataset_samples(), 5)
     })
-    
-    #download
+     
+    # download
     output$downloadData <- downloadHandler(
       filename = function() {
         paste(input$otu, ".csv", sep = "")
@@ -118,7 +122,7 @@ library(vegan)
         write.csv(dataset_otu(), file, row.names = FALSE, sep = ";")
       })
     
-    #filtr procent
+    # filtr percentage
     filtered_titles <- reactive({
       otus_percent <- dataset_otu()
       tbl_df(otus_percent) %>% gather(sample, per, (2:ncol(otus_percent))) %>% 
@@ -131,7 +135,7 @@ library(vegan)
         select(c(1))
     })
     
-    #filtr multivar OTUs
+    # filtr multivar OTUs
     otus_multivar <- reactive({
       filtered_titles_list <- filtered_titles()
       otus_percent <- dataset_otu()
@@ -140,7 +144,7 @@ library(vegan)
         spread(sample, per) 
     })
     
-    #vegan matrix 
+    # vegan matrix 
     otus_multivar_for_plot <- reactive({
       filtered_titles_list <- filtered_titles()
       otus_multivar <- otus_multivar()
@@ -149,7 +153,7 @@ library(vegan)
       otus_multivar <- t(otus_multivar[ , 2:ncol(otus_multivar)])
     })
      
-    #vegan matrix download
+    # vegan matrix download
     output$downloadMultivar <- downloadHandler(
       filename = function() {
         paste(input$otu, ".csv", sep = "")
@@ -158,14 +162,14 @@ library(vegan)
         write.csv(otus_multivar_for_plot(), file, row.names = TRUE, sep = ";")
     })
     
-    #NMDS
+    # NMDS
     mdsord <- reactive({
-      otus_multivar_for_plot <- otus_multivar_for_plot()
+      #otus_multivar_for_plot <- otus_multivar_for_plot()
       set.seed(31)
-      mdsord = metaMDS(comm = otus_multivar_for_plot, distance = "bray", trace = FALSE, k = 2, trymax = 200)
+      mdsord = metaMDS(comm = otus_multivar_for_plot(), distance = "bray", trace = FALSE, k = 2, trymax = 200)
       if(input$hellinger) {
       set.seed(31)
-      mdsord = metaMDS(comm = decostand(otus_multivar_for_plot, "hellinger"), distance = "bray", trace = FALSE, k = 2, trymax = 200)
+      mdsord = metaMDS(comm = decostand(otus_multivar_for_plot(), "hellinger"), distance = "bray", trace = FALSE, k = 2, trymax = 200)
       }
       #plot(mdsord, disp = "sites", type = "p")
       NMDS_data <- dataset_samples()
@@ -174,7 +178,7 @@ library(vegan)
       NMDS_data_final <- cbind(NMDS_data, NMDS_x, NMDS_y)
     })
     
-    #NMDS final matrix download
+    # NMDS final matrix download
     output$downloadMultivarFinal <- downloadHandler(
       filename = function() {
         paste(input$otu, ".csv", sep = "")
@@ -189,9 +193,8 @@ library(vegan)
                   selected = NULL)
     })
     
-    #ggplot NMDS
+    # ggplot NMDS
     mdsord_final <- reactive({
-      NMDS_data_final <- mdsord()
       ggplot(data = mdsord(), aes(y = NMDS_y, x = NMDS_x)) + 
         geom_point(aes_string(colour = input$grouping_factor_input), show.legend = TRUE, size = 4.5) +
         theme_bw() +
@@ -202,7 +205,7 @@ library(vegan)
       mdsord_final()
       })
     
-    #download NMDS
+    # download NMDS
     output$downloadPlotFinal <- downloadHandler(
       filename = function() { paste(input$otu, '.pdf', sep='') },
       content = function(file) {
