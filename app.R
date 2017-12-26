@@ -5,6 +5,7 @@ library(readxl)
 library(tidyverse)
 library(dplyr)
 library(vegan)
+library(shinycssloaders)
 
 
 #### ui ####
@@ -13,48 +14,85 @@ library(vegan)
     sidebarLayout(
       sidebarPanel(
         h4("1."),
-        fileInput('otu', 'Choose OTU table',
-                  accept = c('sheetName', 'header'), multiple = FALSE),
-        checkboxInput('header_otu', 'Header', TRUE),
-        a("example", href = "https://github.com/Vojczech/NMDS_shiny", target="_blank"),
+        fileInput('otu', 
+                  'Choose OTU table',
+                  accept = c('sheetName', 'header'), 
+                  multiple = FALSE),
+        checkboxInput('header_otu', 
+                      'Header',
+                      value = TRUE),
+        a("example", 
+          href = "https://github.com/Vojczech/NMDS_shiny", 
+          target="_blank"),
         tags$br(),
         textInput('sheet_otu', 'Exact name of the excel sheet (required)',
                   placeholder = "name of the sheet"),
-        
-        downloadButton("downloadData", "Download OTU table"),
+        downloadButton("downloadData", 
+                       "Download OTU table"),
         tags$hr(style = "border-color: black;"),
         h4("2."),
-        fileInput('samples', 'Choose sample list',
-                  accept = c('sheetName', 'header'), multiple = FALSE),
-        checkboxInput('header_samples', 'Header', TRUE),
-        textInput('sheet_samples', 'Exact name of the excel sheet (required)',
+        fileInput('samples', 
+                  'Choose sample list',
+                  accept = c('sheetName', 'header'), 
+                  multiple = FALSE),
+        checkboxInput('header_samples', 
+                      'Header', 
+                      value = TRUE),
+        textInput('sheet_samples', 
+                  'Exact name of the excel sheet (required)',
                   placeholder = "name of the sheet"),
         tags$hr(style = "border-color: black;"),
         h4("3."),
-        sliderInput("percent_treshold", "Filter OTUs by percentage per sample", 0.5, 100, c(3), post = "%", step = 0.5),
-        numericInput("no_samples", "Number of samples with percentage >= upper value", value = 3, min = 1, step = 1),
-        h6("Max number of samples:"),
-        verbatimTextOutput("sample_range"),
+        sliderInput("percent_treshold", 
+                    "Filter OTUs by percentage per sample", 
+                    min = 0.5, 
+                    max = 100, c(3), 
+                    post = "%", 
+                    step = 0.5),
+        numericInput("no_samples", 
+                     "Number of samples with percentage >= upper value", 
+                     value = 3, 
+                     min = 1, 
+                     step = 1),
+        helpText("Max number of samples:"),
+        textOutput("sample_range"),
+        tags$br(),
+        tags$br(),
         uiOutput("grouping_factor"),
-        downloadButton("downloadMultivar", "Download table ready for NMDS"),
-        tags$hr(style="border-color: black;"),
+        radioButtons("factor_select",
+                     "Colours by", 
+                     c("Factor" = "Factor", "Numeric" = "Values"), 
+                     inline = T), 
+        downloadButton("downloadMultivar", 
+                       "Download table ready for NMDS"),
+        tags$hr(style = "border-color: black;"),
         h4("4."),
-        checkboxInput("hellinger", "Hellinger transformation of OTU table", value = FALSE),
-        downloadButton("downloadMultivarFinal", "Download final NMDS points as .csv"),
+        checkboxInput("hellinger", 
+                      "Hellinger transformation of OTU table", 
+                      value = FALSE),
+        downloadButton("downloadMultivarFinal", 
+                       "Download final NMDS points as .csv"),
         tags$br(),
         tags$br(),
-        downloadButton("downloadPlotFinal", "Download final plot as .pdf"),
+        downloadButton("downloadPlotFinal", 
+                       "Download final plot as .pdf"),
         tags$hr(style = "border-color: black;"),
         "packages: tidyverse, vegan",
         tags$br(),
-        a("You can find example input files here", href = "https://github.com/Vojczech/NMDS_shiny", target="_blank")
+        a("Minimal examples of input excel files are available here", 
+          href = "https://github.com/Vojczech/NMDS_shiny", 
+          target="_blank")
       ),
+      
       mainPanel(
+        #tags$style(type="text/css",
+                 #  ".shiny-output-error { visibility: hidden; }",
+                #   ".shiny-output-error:before { visibility: hidden; }"),
         h5(textOutput("caption1")),
-        tableOutput("contents1"),
+        tableOutput("contents1") %>% withSpinner(type = getOption("spinner.type", default = 4)),
         h5(textOutput("caption2")),
-        tableOutput("contents2"),
-        plotOutput("contents5")
+        tableOutput("contents2") %>% withSpinner(type = getOption("spinner.type", default = 4)),
+        plotOutput("contents3") %>% withSpinner(type = getOption("spinner.type", default = 4))
       )
     )
   )
@@ -65,8 +103,11 @@ library(vegan)
     
     options(shiny.maxRequestSize=30*1024^2)
     
-    #otu
+    # OTUs
     dataset_otu <- reactive({
+      validate(
+        need(input$otu != "", "Please select a file and sheet with OTUs")
+      )
       infile = input$otu  
       
       if (is.null(infile))
@@ -76,8 +117,11 @@ library(vegan)
       
     })
     
-    #samples
+    # samples
     dataset_samples <- reactive({
+      validate(
+        need(input$samples != "", "Please select a file and sheet with samples")
+      )
       infile = input$samples  
       
       if (is.null(infile))
@@ -112,7 +156,7 @@ library(vegan)
     output$contents2 <- renderTable({
       head(dataset_samples(), 5)
     })
-     
+    
     # download
     output$downloadData <- downloadHandler(
       filename = function() {
@@ -121,6 +165,13 @@ library(vegan)
       content = function(file) {
         write.csv(dataset_otu(), file, row.names = FALSE, sep = ";")
       })
+    
+    # ggplot grouping factor
+    ggplot_factor <- reactive({
+      factor <- dataset_samples()[,input$grouping_factor_input, drop = FALSE] 
+      colnames(factor)<- "ggplot_factor" 
+      factor 
+    })
     
     # filtr percentage
     filtered_titles <- reactive({
@@ -165,17 +216,19 @@ library(vegan)
     # NMDS
     mdsord <- reactive({
       #otus_multivar_for_plot <- otus_multivar_for_plot()
-      set.seed(31)
-      mdsord = metaMDS(comm = otus_multivar_for_plot(), distance = "bray", trace = FALSE, k = 2, trymax = 200)
       if(input$hellinger) {
       set.seed(31)
       mdsord = metaMDS(comm = decostand(otus_multivar_for_plot(), "hellinger"), distance = "bray", trace = FALSE, k = 2, trymax = 200)
+      } else {
+      set.seed(31)
+      mdsord = metaMDS(comm = otus_multivar_for_plot(), distance = "bray", trace = FALSE, k = 2, trymax = 200)
       }
       #plot(mdsord, disp = "sites", type = "p")
       NMDS_data <- dataset_samples()
+      ggplot_factor <- as.data.frame(ggplot_factor())
       NMDS_x <- mdsord$points[ ,1]  
       NMDS_y <- mdsord$points[ ,2]
-      NMDS_data_final <- cbind(NMDS_data, NMDS_x, NMDS_y)
+      NMDS_data_final <- cbind(NMDS_data, NMDS_x, NMDS_y, ggplot_factor)
     })
     
     # NMDS final matrix download
@@ -195,13 +248,19 @@ library(vegan)
     
     # ggplot NMDS
     mdsord_final <- reactive({
-      ggplot(data = mdsord(), aes(y = NMDS_y, x = NMDS_x)) + 
-        geom_point(aes_string(colour = input$grouping_factor_input), show.legend = TRUE, size = 4.5) +
+      mdsord <- mdsord()
+      if (input$factor_select == "Factor") {
+        mdsord$ggplot_factor <- as.factor(mdsord$ggplot_factor)
+      } else {
+        mdsord$ggplot_factor <- as.numeric(mdsord$ggplot_factor)
+      }
+      ggplot(data = mdsord, aes(y = NMDS_y, x = NMDS_x)) + 
+        geom_point(aes(colour = ggplot_factor), show.legend = TRUE, size = 4.5) +
         theme_bw() +
         ggtitle("NMDS plot")
       })
     
-    output$contents5 <- renderPlot({
+    output$contents3 <- renderPlot({
       mdsord_final()
       })
     
