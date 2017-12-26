@@ -1,5 +1,5 @@
 # NMDS_shiny
-App for fast NMDS plots
+App for fast NMDS plots of sample sites
 
 Two excel files/sheets are necessary:
 
@@ -26,5 +26,9 @@ Two excel files/sheets are necessary:
 
 + [Hellinger transformation](http://mb3is.megx.net/gustame/reference/dissimilarity) as optional approach for lowering influence of rare OTUs
 
-+ It is possible to download .csv tables with NMDS values for your own analysis 
++ It is possible to download .csv tables with NMDS values of each sample for your own analysis 
+
++ For colour coding of different groups of samples choose appropriate grouping factor and check "Factor"
+
++ For gradient colour of sample sites according to environmental metadata choose "Values"
  
