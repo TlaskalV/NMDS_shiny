@@ -62,7 +62,8 @@ library(shinycssloaders)
         radioButtons("factor_select",
                      "Colours by", 
                      c("Factor" = "Factor", "Numeric" = "Values"), 
-                     inline = T), 
+                     inline = T,
+                     selected = "Factor"), 
         downloadButton("downloadMultivar", 
                        "Download table ready for NMDS"),
         tags$hr(style = "border-color: black;"),
@@ -77,7 +78,6 @@ library(shinycssloaders)
         downloadButton("downloadPlotFinal", 
                        "Download final plot as .pdf"),
         tags$hr(style = "border-color: black;"),
-        "packages: tidyverse, vegan",
         tags$br(),
         a("Minimal examples of input excel files are available here", 
           href = "https://github.com/Vojczech/NMDS_shiny", 
@@ -85,16 +85,23 @@ library(shinycssloaders)
       ),
       
       mainPanel(
-        #tags$style(type="text/css",
-                 #  ".shiny-output-error { visibility: hidden; }",
-                #   ".shiny-output-error:before { visibility: hidden; }"),
-        h5(textOutput("caption1")),
-        tableOutput("contents1") %>% withSpinner(type = getOption("spinner.type", default = 4)),
-        h5(textOutput("caption2")),
-        tableOutput("contents2") %>% withSpinner(type = getOption("spinner.type", default = 4)),
-        plotOutput("contents3") %>% withSpinner(type = getOption("spinner.type", default = 4))
+        tabsetPanel(
+          tabPanel("NMDS",
+                   h5(textOutput("caption1")),
+                   tableOutput("contents1") %>% withSpinner(type = getOption("spinner.type", default = 4)),
+                   h5(textOutput("caption2")),
+                   tableOutput("contents2") %>% withSpinner(type = getOption("spinner.type", default = 4)),
+                   plotOutput("contents3") %>% withSpinner(type = getOption("spinner.type", default = 4))
+                   ),
+          tabPanel("About",
+                   h4("Plots for fast insight into community data"),
+                   p("Visit", a("this link", href = "https://github.com/Vojczech/NMDS_shiny", target="_blank"), "for brief tutorial."),
+                   p("Created in 2017."),
+                   p("packages:", a("tidyverse", href = "https://www.tidyverse.org/", target="_blank"), a("vegan", href = "https://cran.r-project.org/web/packages/vegan/index.html", target="_blank"), a("shinycssloaders", href = "https://github.com/andrewsali/shinycssloaders", target="_blank"))
+                   )
+          )
+        )
       )
-    )
   )
 
   
