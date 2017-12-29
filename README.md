@@ -12,7 +12,7 @@ App for fast NMDS plots of sample sites
 |    CL03     |   4.5    |  4.9   |     1.1   | 
 
 
-2. **Sample list** with sample names (same names as in OTU table) and further environmental variables which is used for grouping in NMDS and '''envfit''' function. Again, choose sheet by its name.
+2. **Sample list** with sample names (same names as in OTU table) and further environmental variables which is used for grouping in NMDS and `envfit` function. Again, choose sheet by its name.
 
 | sample_name | age_class |sampled_org | year | 
 |:---------:|:-------:|:------:|:-------:| 
