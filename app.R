@@ -71,6 +71,11 @@ library(shinycssloaders)
         checkboxInput("hellinger", 
                       "Hellinger transformation of OTU table", 
                       value = FALSE),
+        uiOutput("fitted"),
+        downloadButton("downloadScoresFinal", 
+                       "Download scores for env. variables as .csv"),
+        tags$br(),
+        tags$br(),
         downloadButton("downloadMultivarFinal", 
                        "Download final NMDS points as .csv"),
         tags$br(),
@@ -96,7 +101,7 @@ library(shinycssloaders)
           tabPanel("About",
                    h4("Plots for fast insight into community data"),
                    p("Visit", a("this link", href = "https://github.com/Vojczech/NMDS_shiny", target="_blank"), "for brief tutorial."),
-                   p("Created in 2017."),
+                   p("Tested on real data from the paper", a("Tláskal et al., 2017.", href = "https://academic.oup.com/femsec/article-abstract/93/12/fix157/4604780", target = "_blank"), "App is producing same results as metaMDS and envfit functions from the vegan package alone. Bray-Curtis dissimilarity is used. Hellinger transfromation of the data is optional."),
                    p("packages:", a("tidyverse", href = "https://www.tidyverse.org/", target="_blank"), a("vegan", href = "https://cran.r-project.org/web/packages/vegan/index.html", target="_blank"), a("shinycssloaders", href = "https://github.com/andrewsali/shinycssloaders", target="_blank"))
                    )
           )
@@ -220,7 +225,7 @@ library(shinycssloaders)
         write.csv(otus_multivar_for_plot(), file, row.names = TRUE, sep = ";")
     })
     
-    # NMDS
+    # NMDS without envfit
     mdsord <- reactive({
       #otus_multivar_for_plot <- otus_multivar_for_plot()
       if(input$hellinger) {
@@ -230,12 +235,29 @@ library(shinycssloaders)
       set.seed(31)
       mdsord = metaMDS(comm = otus_multivar_for_plot(), distance = "bray", trace = FALSE, k = 2, trymax = 200)
       }
-      #plot(mdsord, disp = "sites", type = "p")
       NMDS_data <- dataset_samples()
       ggplot_factor <- as.data.frame(ggplot_factor())
       NMDS_x <- mdsord$points[ ,1]  
       NMDS_y <- mdsord$points[ ,2]
       NMDS_data_final <- cbind(NMDS_data, NMDS_x, NMDS_y, ggplot_factor)
+    })
+    
+    # NMDS envfit included, important are same parametres and set.seed
+    mdsord_fitted <- reactive({
+      if(input$hellinger) {
+        set.seed(31)
+        mdsord = metaMDS(comm = decostand(otus_multivar_for_plot(), "hellinger"), distance = "bray", trace = FALSE, k = 2, trymax = 200)
+      } else {
+        set.seed(31)
+        mdsord = metaMDS(comm = otus_multivar_for_plot(), distance = "bray", trace = FALSE, k = 2, trymax = 200)
+      }
+      if(is.null(input$fitted_factors)){
+      } else {
+      set.seed(31)
+      fitted_plot <- envfit(mdsord, fitted_df(), permutations = 999, arrow.mul = 1) 
+      envfit_scores <- as.data.frame(scores(fitted_plot, display = "vectors"))
+      envfit_scores <- cbind.data.frame(envfit_scores, env.variables = rownames(envfit_scores), stringsAsFactors = FALSE)
+      }
     })
     
     # NMDS final matrix download
@@ -247,24 +269,64 @@ library(shinycssloaders)
         write.csv(mdsord(), file, row.names = TRUE, sep = ";")
       })
     
+    # NMDS scores for env variables download
+    output$downloadScoresFinal <- downloadHandler(
+      filename = function() {
+        paste(input$otu, ".csv", sep = "")
+      },
+      content = function(file) {
+        write.csv(mdsord_fitted(), file, row.names = TRUE, sep = ";")
+      })
+    
     output$grouping_factor <- renderUI({
       selectInput("grouping_factor_input", "Grouping factor",
-                  sort(colnames(dataset_samples())),
+                  colnames(dataset_samples()),
                   selected = NULL)
     })
     
-    # ggplot NMDS
+    # env variables for envfit
+    output$fitted <- renderUI({
+      checkboxGroupInput("fitted_factors",
+                         "Choose fitted environmental factors",
+                         choices = colnames(dataset_samples()),
+                         selected = NULL)
+      })
+    
+    fitted_df <- reactive({
+      variables <- dataset_samples()[,input$fitted_factors, drop = FALSE] 
+      variables 
+    })
+      
+    
+    # ggplot NMDS, points are from NMDS without envfit, arrows for env variables are from NMDS with envfit
     mdsord_final <- reactive({
       mdsord <- mdsord()
+      mdsord_fitted <- mdsord_fitted()
+      # coloured by factor or value
       if (input$factor_select == "Factor") {
         mdsord$ggplot_factor <- as.factor(mdsord$ggplot_factor)
       } else {
         mdsord$ggplot_factor <- as.numeric(mdsord$ggplot_factor)
       }
-      ggplot(data = mdsord, aes(y = NMDS_y, x = NMDS_x)) + 
-        geom_point(aes(colour = ggplot_factor), show.legend = TRUE, size = 4.5) +
-        theme_bw() +
-        ggtitle("NMDS plot")
+      # if env variables are available
+      if(is.null(input$fitted_factors)){
+      ggplot(data = mdsord, aes(y = NMDS_y, x = NMDS_x)) +
+      geom_point(aes(colour = ggplot_factor), show.legend = TRUE, size = 4.5) +
+      theme_bw() + 
+      ggtitle("NMDS plot")
+      } else {
+        ggplot(data = mdsord, aes(y = NMDS_y, x = NMDS_x)) +
+          geom_point(aes(colour = ggplot_factor), show.legend = TRUE, size = 4.5) +
+          theme_bw() +
+          ggtitle("NMDS plot") +
+          geom_segment(data = mdsord_fitted(),
+                       aes(x = 0, xend = 2*NMDS1, y = 0, yend = 2*NMDS2),
+                       arrow = arrow(length = unit(0.25, "cm")), colour = "#556b2f", size = 0.7) +
+          geom_text(data = mdsord_fitted(),
+                    aes(x = 2*NMDS1, y = 2*NMDS2, label = env.variables),
+                    size = 6,
+                    hjust = -0.3)
+        }
       })
     
     output$contents3 <- renderPlot({
