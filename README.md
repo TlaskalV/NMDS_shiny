@@ -1,9 +1,9 @@
 # NMDS_shiny
 App for fast NMDS plots of sample sites
 
-Two excel files/sheets are necessary:
+**Two excel** files/sheets are necessary:
 
-1. OTU table with values in percents. The first column contains OTU label, other columns contanin abundance values in separate samples. After upload of the file, call the correct sheet by its name. 
+1. **OTU table** with values in percents. The first column contains OTU label, other columns contanin abundance values in separate samples. After upload of the file, call the correct sheet by its name. 
 
 | OTU_label | sample1 |sample2 | sample3 | 
 |:---------:|:-------:|:------:|:-------:| 
@@ -12,7 +12,7 @@ Two excel files/sheets are necessary:
 |    CL03     |   4.5    |  4.9   |     1.1   | 
 
 
-2. Sample list with sample names (same names as in OTU table) and further environmental characteristic which is used for grouping in NMDS. Again, choose sheet by its name.
+2. **Sample list** with sample names (same names as in OTU table) and further environmental variables which is used for grouping in NMDS and '''envfit''' function. Again, choose sheet by its name.
 
 | sample_name | age_class |sampled_org | year | 
 |:---------:|:-------:|:------:|:-------:| 
@@ -24,11 +24,13 @@ Two excel files/sheets are necessary:
 
 + It is possible to filter OTUs for NMDS construction by abundance treshold in certain number of samples.
 
-+ [Hellinger transformation](http://mb3is.megx.net/gustame/reference/dissimilarity) as optional approach for lowering influence of rare OTUs
-
-+ It is possible to download .csv tables with NMDS values of each sample for your own analysis 
-
 + For colour coding of different groups of samples choose appropriate grouping factor and check "Factor"
 
 + For gradient colour of sample sites according to environmental metadata choose "Values"
+
++ [Hellinger transformation](http://mb3is.megx.net/gustame/reference/dissimilarity) as optional approach for lowering influence of rare OTUs
+
++ By selecting columns from your sample list, you can fit several environmental variables into NMDS
+
++ It is possible to download .csv tables with NMDS values of each sample for your own analysis as well as scores for environmental factors 
  
