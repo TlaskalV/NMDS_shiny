@@ -20,17 +20,24 @@ App for fast NMDS plots of sample sites
 |  sample2   |  2   |   fagus  | 2014     | 
 |    sample3     |   1    |  picea   |     2015   | 
 
-+ After upload of the tables it is necessary to choose the correct excel sheet by its name 
+---
 
-+ It is possible to filter OTUs for NMDS construction by abundance treshold in certain number of samples.
+Workflow:
 
-+ For colour coding of different groups of samples choose appropriate grouping factor and check "Factor"
+1. After upload of the tables (.xlsx) it is necessary to choose the correct excel sheet by its name.
 
-+ For gradient colour of sample sites according to environmental metadata choose "Values"
+2. It is possible to filter OTUs for NMDS construction by abundance treshold in certain number of samples.
 
-+ [Hellinger transformation](http://mb3is.megx.net/gustame/reference/dissimilarity) as optional approach for lowering influence of rare OTUs
+3. Colours of points in NMDS
++ For colour coding of different groups of samples choose appropriate grouping factor (i.e. column with environmental variable in the sample list) and check "Factor".
 
-+ By selecting columns from your sample list, you can fit several environmental variables into NMDS
+or
 
-+ It is possible to download .csv tables with NMDS values of each sample for your own analysis as well as scores for environmental factors 
++ For gradient colour of sample sites according to environmental metadata choose "Values".
+
+5. [Hellinger transformation](http://mb3is.megx.net/gustame/reference/dissimilarity) as optional approach for lowering influence of rare OTUs.
+
+6. By selecting columns from your sample list, you can fit several environmental variables into NMDS using `envfit` function.
+
+7. It is possible to download .csv tables with NMDS values of each sample site for your own analysis as well as scores for environmental factors.
  
