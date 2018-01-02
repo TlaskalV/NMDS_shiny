@@ -29,15 +29,18 @@ Workflow:
 2. It is possible to filter OTUs for NMDS construction by abundance treshold in certain number of samples.
 
 3. Colours of points in NMDS
-+ For colour coding of different groups of samples choose appropriate grouping factor (i.e. column with environmental variable in the sample list) and check "Factor".
+
+i) For colour coding of different groups of samples choose appropriate grouping factor (i.e. column with environmental variable in the sample list) and check "Factor".
 
 or
 
-+ For gradient colour of sample sites according to environmental metadata choose "Values".
+ii) For gradient colour of sample sites according to environmental metadata choose "Values".
 
 5. [Hellinger transformation](http://mb3is.megx.net/gustame/reference/dissimilarity) as optional approach for lowering influence of rare OTUs.
 
-6. By selecting columns from your sample list, you can fit several environmental variables into NMDS using `envfit` function.
+6. By selecting columns from your sample list, you can fit several environmental variables into NMDS using `envfit` function. **No missing values in environmental variables**
 
 7. It is possible to download .csv tables with NMDS values of each sample site for your own analysis as well as scores for environmental factors.
+
++ Memory on the shinyapps.io is limited, if server disconnects after upload try to reduce excel file size by deleting of unnecessary OTUs (singletons and rare ones).
  
