@@ -6,6 +6,7 @@ library(tidyverse)
 library(dplyr)
 library(vegan)
 library(shinycssloaders)
+library(ggrepel)
 
 
 #### ui ####
@@ -106,7 +107,11 @@ library(shinycssloaders)
                    p("Visit", a("this link", href = "https://github.com/Vojczech/NMDS_shiny", target="_blank"), "for brief tutorial."),
                    p("Tested on real data from the paper", a("Tláskal et al., 2017.", href = "https://academic.oup.com/femsec/article-abstract/93/12/fix157/4604780", target = "_blank"), "App is producing same results as metaMDS and envfit functions from the vegan package alone. Bray-Curtis dissimilarity is used. Hellinger transformation of the data is optional."),
                    p("Please note that apps hosted for free on shinyapps.io are limited to 1GB of memory. Therefore loading of larger OTU tables may take a while. If server disconnects after upload try to decrease size of excel file by e.g. deleting of singleton OTUs."),
-                   p("packages:", a("tidyverse", href = "https://www.tidyverse.org/", target="_blank"), a("vegan", href = "https://cran.r-project.org/web/packages/vegan/index.html", target="_blank"), a("shinycssloaders", href = "https://github.com/andrewsali/shinycssloaders", target="_blank"))
+                   p("packages:", 
+                     p(a("tidyverse", href = "https://www.tidyverse.org/", target="_blank")), 
+                     p(a("vegan", href = "https://cran.r-project.org/web/packages/vegan/index.html", target="_blank")), 
+                     p(a("ggrepel", href = "https://github.com/slowkow/ggrepel", target="_blank")), 
+                     p(a("shinycssloaders", href = "https://github.com/andrewsali/shinycssloaders", target="_blank")))
                    )
           )
         )
@@ -317,14 +322,14 @@ library(shinycssloaders)
       ggplot(data = mdsord, aes(y = NMDS_y, x = NMDS_x)) +
       geom_point(aes(colour = ggplot_factor), show.legend = TRUE, size = 4.5) +
           {if(input$sample_disp)
-            geom_text(aes(x = NMDS_x, y = NMDS_y, label = sample), hjust = -0.2, size = 3)} + # display sample names
+            geom_text_repel(aes(x = NMDS_x, y = NMDS_y, label = sample, color = ggplot_factor), size = 2, segment.color = 'grey50', segment.size = 0.2)} + # display sample names
       theme_bw() + 
       ggtitle("NMDS plot")
       } else {
         ggplot(data = mdsord, aes(y = NMDS_y, x = NMDS_x)) +
           geom_point(aes(colour = ggplot_factor), show.legend = TRUE, size = 4.5) +
           {if(input$sample_disp)
-            geom_text(aes(x = NMDS_x, y = NMDS_y, label = sample), hjust = -0.2, size = 3)} + # display sample names
+            geom_text_repel(aes(x = NMDS_x, y = NMDS_y, label = sample, color = ggplot_factor), size = 2, segment.color = 'grey50', segment.size = 0.2)} + # display sample names
           theme_bw() +
           ggtitle("NMDS plot") +
           geom_segment(data = mdsord_fitted(),
