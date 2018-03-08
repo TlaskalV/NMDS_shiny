@@ -63,7 +63,10 @@ library(shinycssloaders)
                      "Colours by", 
                      c("Factor" = "Factor", "Numeric" = "Values"), 
                      inline = T,
-                     selected = "Factor"), 
+                     selected = "Factor"),
+        checkboxInput("sample_disp", 
+                      "Display sample names", 
+                      value = FALSE),
         downloadButton("downloadMultivar", 
                        "Download table ready for NMDS"),
         tags$hr(style = "border-color: black;"),
@@ -313,11 +316,15 @@ library(shinycssloaders)
       if(is.null(input$fitted_factors)){
       ggplot(data = mdsord, aes(y = NMDS_y, x = NMDS_x)) +
       geom_point(aes(colour = ggplot_factor), show.legend = TRUE, size = 4.5) +
+          {if(input$sample_disp)
+            geom_text(aes(x = NMDS_x, y = NMDS_y, label = sample), hjust = -0.2, size = 3)} + # display sample names
       theme_bw() + 
       ggtitle("NMDS plot")
       } else {
         ggplot(data = mdsord, aes(y = NMDS_y, x = NMDS_x)) +
           geom_point(aes(colour = ggplot_factor), show.legend = TRUE, size = 4.5) +
+          {if(input$sample_disp)
+            geom_text(aes(x = NMDS_x, y = NMDS_y, label = sample), hjust = -0.2, size = 3)} + # display sample names
           theme_bw() +
           ggtitle("NMDS plot") +
           geom_segment(data = mdsord_fitted(),
