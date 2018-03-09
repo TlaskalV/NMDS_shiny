@@ -36,6 +36,8 @@ or
 
 ii) For gradient colour of sample sites according to environmental metadata choose "Values".
 
+4. Label points by sample ID or sample type or by other variable
+
 5. [Hellinger transformation](http://mb3is.megx.net/gustame/reference/dissimilarity) as optional approach for lowering influence of rare OTUs.
 
 6. By selecting columns from your sample list, you can fit several environmental variables into NMDS using `envfit` function. **No missing values in environmental variables**
