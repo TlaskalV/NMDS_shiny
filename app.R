@@ -68,6 +68,7 @@ library(ggrepel)
         checkboxInput("sample_disp", 
                       "Display sample names", 
                       value = FALSE),
+        uiOutput("label_factor"),
         downloadButton("downloadMultivar", 
                        "Download table ready for NMDS"),
         tags$hr(style = "border-color: black;"),
@@ -293,6 +294,18 @@ library(ggrepel)
                   selected = NULL)
     })
     
+    # label points
+    output$label_factor <- renderUI({
+      selectInput("label_factor_input", "Label points",
+                  colnames(dataset_samples()),
+                  selected = NULL)
+    })
+    
+    label_df <- reactive({
+      label_variables <- dataset_samples()[,input$label_factor_input, drop = FALSE] 
+      label_variables <- unlist(label_variables) # data.frame to atomic vector which is needed for geom_text 
+    })
+    
     # env variables for envfit
     output$fitted <- renderUI({
       checkboxGroupInput("fitted_factors",
@@ -322,14 +335,14 @@ library(ggrepel)
       ggplot(data = mdsord, aes(y = NMDS_y, x = NMDS_x)) +
       geom_point(aes(colour = ggplot_factor), show.legend = TRUE, size = 4.5) +
           {if(input$sample_disp)
-            geom_text_repel(aes(x = NMDS_x, y = NMDS_y, label = sample, color = ggplot_factor), size = 2, segment.color = 'grey50', segment.size = 0.2)} + # display sample names
+            geom_text_repel(aes(x = NMDS_x, y = NMDS_y, label = label_df(), color = ggplot_factor), size = 2, segment.color = 'grey50', segment.size = 0.2)} + # display sample names
       theme_bw() + 
       ggtitle("NMDS plot")
       } else {
         ggplot(data = mdsord, aes(y = NMDS_y, x = NMDS_x)) +
           geom_point(aes(colour = ggplot_factor), show.legend = TRUE, size = 4.5) +
           {if(input$sample_disp)
-            geom_text_repel(aes(x = NMDS_x, y = NMDS_y, label = sample, color = ggplot_factor), size = 2, segment.color = 'grey50', segment.size = 0.2)} + # display sample names
+            geom_text_repel(aes(x = NMDS_x, y = NMDS_y, label = label_df(), color = ggplot_factor), size = 2, segment.color = 'grey50', segment.size = 0.2)} + # display sample names
           theme_bw() +
           ggtitle("NMDS plot") +
           geom_segment(data = mdsord_fitted(),
