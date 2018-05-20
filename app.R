@@ -250,7 +250,8 @@ library(ggrepel)
       ggplot_factor <- as.data.frame(ggplot_factor())
       NMDS_x <- mdsord$points[ ,1]  
       NMDS_y <- mdsord$points[ ,2]
-      NMDS_data_final <- cbind(NMDS_data, NMDS_x, NMDS_y, ggplot_factor)
+      nmds_stress <- round(mdsord$stress, digits = 3)
+      NMDS_data_final <- cbind(NMDS_data, NMDS_x, NMDS_y, ggplot_factor, data.frame(nmds_stress))
     })
     
     # NMDS envfit included, important are same parametres and set.seed
@@ -325,6 +326,7 @@ library(ggrepel)
     mdsord_final <- reactive({
       mdsord <- mdsord()
       mdsord_fitted <- mdsord_fitted()
+      stress <- unique(mdsord$nmds_stress) # for stress value of NMDS
       # coloured by factor or value
       if (input$factor_select == "Factor") {
         mdsord$ggplot_factor <- as.factor(mdsord$ggplot_factor)
@@ -335,6 +337,7 @@ library(ggrepel)
       if(is.null(input$fitted_factors)){
       ggplot(data = mdsord, aes(y = NMDS_y, x = NMDS_x)) +
       geom_point(aes(colour = ggplot_factor), show.legend = TRUE, size = 4.5) +
+      annotate("text", x = (0+max(mdsord$NMDS_x)), y = (0+min(mdsord$NMDS_y)), label = paste("stress\n", stress), size = 3.5) +
           {if(input$sample_disp)
             geom_text_repel(aes(x = NMDS_x, y = NMDS_y, label = label_df(), color = ggplot_factor), size = 2, segment.color = 'grey50', segment.size = 0.2)} + # display sample names
       theme_bw() + 
@@ -342,15 +345,16 @@ library(ggrepel)
       } else {
         ggplot(data = mdsord, aes(y = NMDS_y, x = NMDS_x)) +
           geom_point(aes(colour = ggplot_factor), show.legend = TRUE, size = 4.5) +
+          annotate("text", x = (0+max(mdsord$NMDS_x)), y = (0+min(mdsord$NMDS_y)), label = paste("stress\n", stress), size = 3.5) +
           {if(input$sample_disp)
             geom_text_repel(aes(x = NMDS_x, y = NMDS_y, label = label_df(), color = ggplot_factor), size = 2, segment.color = 'grey50', segment.size = 0.2)} + # display sample names
           theme_bw() +
           ggtitle("NMDS plot") +
           geom_segment(data = mdsord_fitted(),
-                       aes(x = 0, xend = 2*NMDS1, y = 0, yend = 2*NMDS2),
+                       aes(x = 0, xend = 1.2*NMDS1, y = 0, yend = 1.2*NMDS2),
                        arrow = arrow(length = unit(0.25, "cm")), colour = "#556b2f", size = 0.7) +
           geom_text(data = mdsord_fitted(),
-                    aes(x = 2*NMDS1, y = 2*NMDS2, label = env.variables),
+                    aes(x = 1.2*NMDS1, y = 1.2*NMDS2, label = env.variables),
                     size = 6,
                     hjust = -0.3)
         }
