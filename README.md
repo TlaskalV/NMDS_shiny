@@ -1,5 +1,14 @@
-# NMDS_shiny
+# NMDS shiny
 App for fast NMDS plots of sample sites
+
+---
+Try it on [shinyapps.io](https://labenvmicro.shinyapps.io/shiny_nmds/) or start R and type:
+```
+install.packages("shiny")
+library(shiny)
+runGitHub("NMDS_shiny", "Vojczech") 
+```
+---
 
 **Two excel** files/sheets are necessary:
 
@@ -40,7 +49,7 @@ ii) For gradient colour of sample sites according to environmental metadata choo
 
 5. [Hellinger transformation](http://mb3is.megx.net/gustame/reference/dissimilarity) as optional approach for lowering influence of rare OTUs.
 
-6. By selecting columns from your sample list, you can fit several environmental variables into NMDS using `envfit` function. **No missing values in environmental variables**
+6. By selecting columns from your sample list, you can fit several environmental variables into NMDS using `envfit` function. **Avoid missing values in environmental variables**
 
 7. It is possible to download .csv tables with NMDS values of each sample site for your own analysis as well as scores for environmental factors.
 
