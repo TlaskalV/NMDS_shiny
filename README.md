@@ -4,7 +4,7 @@ App for fast NMDS plots of sample sites
 ---
 Try it on [shinyapps.io](https://labenvmicro.shinyapps.io/shiny_nmds/) or start R and type:
 ```
-install.packages("shiny")
+install.packages(c("shiny", "readxl", "tidyverse", "dplyr", "vegan", "shinycssloaders", "ggrepel"))
 library(shiny)
 runGitHub("NMDS_shiny", "Vojczech") 
 ```
