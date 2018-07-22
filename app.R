@@ -337,6 +337,11 @@ library(ggrepel)
       if(is.null(input$fitted_factors)){
       ggplot(data = mdsord, aes(y = NMDS_y, x = NMDS_x)) +
       geom_point(aes(colour = ggplot_factor), show.legend = TRUE, size = 4.5) +
+      {if (is.factor(mdsord$ggplot_factor)== TRUE) {
+        scale_color_viridis_d() # color in the case of discrete values    
+      } else {
+        scale_color_viridis_c() # color in the case of continuous values
+      }} +
       annotate("text", x = (0+max(mdsord$NMDS_x)), y = (0+min(mdsord$NMDS_y)), label = paste("stress\n", stress), size = 3.5) +
           {if(input$sample_disp)
             geom_text_repel(aes(x = NMDS_x, y = NMDS_y, label = label_df(), color = ggplot_factor), size = 2, segment.color = 'grey50', segment.size = 0.2)} + # display sample names
@@ -345,6 +350,11 @@ library(ggrepel)
       } else {
         ggplot(data = mdsord, aes(y = NMDS_y, x = NMDS_x)) +
           geom_point(aes(colour = ggplot_factor), show.legend = TRUE, size = 4.5) +
+          {if (is.factor(mdsord$ggplot_factor)== TRUE) {
+            scale_color_viridis_d() # color in the case of discrete values    
+          } else {
+            scale_color_viridis_c() # color in the case of continuous values
+          }} +
           annotate("text", x = (0+max(mdsord$NMDS_x)), y = (0+min(mdsord$NMDS_y)), label = paste("stress\n", stress), size = 3.5) +
           {if(input$sample_disp)
             geom_text_repel(aes(x = NMDS_x, y = NMDS_y, label = label_df(), color = ggplot_factor), size = 2, segment.color = 'grey50', segment.size = 0.2)} + # display sample names
