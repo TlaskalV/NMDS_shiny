@@ -1,6 +1,7 @@
 #### NMDS plot ####
 
 library(shiny)
+library(shinythemes)
 library(readxl)
 library(tidyverse)
 library(dplyr)
@@ -11,6 +12,7 @@ library(ggrepel)
 
 #### ui ####
   ui <- fluidPage(
+    theme = shinytheme("sandstone"),
     titlePanel("NMDS app"),
     sidebarLayout(
       sidebarPanel(
