@@ -73,11 +73,11 @@ You should now see the preview of the uploaded tables.
 
 3. Colours of points in NMDS
 
-i) For colour coding of different groups of samples choose appropriate grouping factor (i.e. column with environmental variable in the sample list) and check "Factor".
+..* For colour coding of different groups of samples choose appropriate grouping factor (i.e. column with environmental variable in the sample list) and check "Factor".
 
 or
 
-ii) For gradient colour of sample sites according to environmental metadata choose "Values".
+..* For gradient colour of sample sites according to environmental metadata choose "Values".
 <kbd>
 <img align="left" src="/pictures/settings.png" width="300">
 </kbd>
@@ -95,16 +95,19 @@ ii) For gradient colour of sample sites according to environmental metadata choo
 <kbd>
 <img align="left" src="/pictures/envfit.png" width="300">
 </kbd>
+&nbsp;&nbsp;&nbsp;
 
 
 7. It is possible to download 
-+.csv tables with NMDS values of each sample site for your own analysis
-+scores for environmental factors.
-+final pdf with rendered ggplot
+... .csv tables with NMDS values of each sample site for your own analysis
+
+...scores for environmental factors.
+
+...final pdf with rendered ggplot
 <kbd>
 <img align="left" src="/pictures/nmds.png" width="400">
 </kbd>
 
 
-> Memory on the [shinyapps.io](https://labenvmicro.shinyapps.io/shiny_nmds/) is limited, if server disconnects after upload try to reduce excel file size by deleting of unnecessary OTUs (singletons and rare ones) or use your own local R installation as described in #where-to-try-app
+> Memory on the [shinyapps.io](https://labenvmicro.shinyapps.io/shiny_nmds/) is limited, if server disconnects after upload try to reduce excel file size by deleting of unnecessary OTUs (singletons and rare ones) or use your own local R installation as described in [Where to try app](https://github.com/Vojczech/NMDS_shiny#where-to-try-app)
  
