@@ -34,9 +34,9 @@ runGitHub("NMDS_shiny", "Vojczech")
 |    CL03     |   4.5    |  4.9   |     1.1   |   1.0  |   0.3  |   1.6  |
 
 
-<kbd>
-<img align="left" src="/pictures/upload_otu_table.png" width="300">
-</kbd>
+<div align="left">
+    <img src="/pictures/upload_otu_table.png?raw=true" width="400px"</img> 
+</div>
 
 
 2. **Sample list** ([example](https://github.com/Vojczech/NMDS_shiny/blob/master/samples.xlsx)) with sample names (same names as in OTU table) and further environmental variables which are used for grouping in NMDS and `envfit` function. Again, choose sheet by its name.
@@ -49,32 +49,29 @@ runGitHub("NMDS_shiny", "Vojczech")
 |    sample4     |   2    |  spruce   |     2008   | 
 |    sample5     |   3    |  spruce   |     1997   | 
 
-
-<kbd>
-<img align="left" src="/pictures/upload_sample_list.png" width="300">
-</kbd>
+<div align="left">
+    <img src="/pictures/upload_sample_list.png?raw=true" width="400px"</img> 
+</div>
 
 
 You should now see the preview of the uploaded tables.
-
-
-<kbd>
-<img align="left" src="/pictures/upload_preview.png" width="300">
-</kbd>
+<div align="left">
+    <img src="/pictures/upload_preview.png?raw=true" width="400px"</img> 
+</div>
 
 
 ## Settings 
 
 1. After upload of the tables (.xlsx) it is necessary to choose the correct excel sheet by its name.
-<kbd>
-<img align="left" src="/pictures/upload.png" width="300">
-</kbd>
+<div align="left">
+    <img src="/pictures/upload.png?raw=true" width="400px"</img> 
+</div>
 
 
 2. It is possible to filter OTUs for NMDS construction by abundance treshold in certain number of samples.
-<kbd>
-<img align="left" src="/pictures/settings_filter.png" width="300">
-</kbd>
+<div align="left">
+    <img src="/pictures/settings_filter.png?raw=true" width="400px"</img> 
+</div>
 
 
 3. Colours of points in NMDS
@@ -84,26 +81,23 @@ You should now see the preview of the uploaded tables.
 or
 
 * For gradient colour of sample sites according to environmental metadata choose "Values".
-<kbd>
-<img align="left" src="/pictures/settings.png" width="300">
-</kbd>
+<div align="left">
+    <img src="/pictures/settings.png?raw=true" width="400px"</img> 
+</div>
 
 
 4. Label points by sample ID or sample type or by other variable. Label positions are iteratively found with great package [`ggrepel`](https://github.com/slowkow/ggrepel) by [@slowkow](https://github.com/slowkow).
-<kbd>
-<img align="left" src="/pictures/settings_labels.png" width="300">
-</kbd>
+<div align="left">
+    <img src="/pictures/settings_labels.png?raw=true" width="400px"</img> 
+</div>
 
 
 5. [Hellinger transformation](http://mb3is.megx.net/gustame/reference/dissimilarity) as optional approach for lowering influence of rare OTUs. This is quite common microbial data transformation.
 
 
 6. By selecting columns from your sample list, you can fit several environmental variables into NMDS using `envfit` function. **Avoid missing values in environmental variables**
-<kbd>
-<img align="left" src="/pictures/envfit.png" width="300">
-</kbd>
 <div align="left">
-    <img src="/pictures/nmds.png" width="400px"</img> 
+    <img src="/pictures/envfit.png?raw=true" width="400px"</img> 
 </div>
 
 
