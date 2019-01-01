@@ -102,6 +102,9 @@ or
 <kbd>
 <img align="left" src="/pictures/envfit.png" width="300">
 </kbd>
+<div align="left">
+    <img src="/pictures/nmds.png" width="400px"</img> 
+</div>
 
 
 7. It is possible to download 
@@ -111,7 +114,7 @@ or
 
 * final pdf with rendered ggplot
 <div align="left">
-    <img src="/pictures/nmds.png" width="400px"</img> 
+    <img src="/pictures/nmds.png?raw=true" width="400px"</img> 
 </div>
 
 
