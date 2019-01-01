@@ -1,7 +1,7 @@
 # NMDS shiny
 App for fast NMDS plots of sample sites based on microbial OTUs relative abundance.
 
-<img align="right" src="/pictures/nmds?raw=true.png" width="400">
+<img align="right" src="/pictures/nmds.png?raw=true" width="400">
 
 ## Table of contents
 
@@ -108,7 +108,7 @@ or
 
 * final pdf with rendered ggplot
 <div align="left">
-    <img src="/pictures/nmds.png?raw=true" width="400px"</img> 
+    <img src="/pictures/nmds.png?raw=true" width="500px"</img> 
 </div>
 
 
