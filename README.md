@@ -95,7 +95,7 @@ or
 <kbd>
 <img align="left" src="/pictures/envfit.png" width="300">
 </kbd>
-&nbsp;&nbsp;&nbsp;
+&nbsp; &nbsp; &nbsp; 
 
 
 7. It is possible to download 
