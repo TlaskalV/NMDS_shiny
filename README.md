@@ -1,7 +1,7 @@
 # NMDS shiny
 App for fast NMDS plots of sample sites based on microbial OTUs relative abundance.
 
-<img align="right" src="/pictures/nmds.png" width="400">
+<img align="right" src="/pictures/nmds?raw=true.png" width="400">
 
 ## Table of contents
 
@@ -10,12 +10,12 @@ App for fast NMDS plots of sample sites based on microbial OTUs relative abundan
 * [Settings](#settings)
 
 ## Where to try app
-* <img align="left" src="/pictures/shiny_logo.png" width="50"> online web app hosted on [labenvmicro.shinyapps.io](https://labenvmicro.shinyapps.io/shiny_nmds/), this option is limited to 1GB of RAM memory. Therefore bigger data may take some time to analyze. For huge tables beyond memory limit the online app gives error.  
+* <img align="left" src="/pictures/shiny_logo.png?raw=true" width="50"> online web app hosted on [labenvmicro.shinyapps.io](https://labenvmicro.shinyapps.io/shiny_nmds/), this option is limited to 1GB of RAM memory. Therefore bigger data may take some time to analyze. For huge tables beyond memory limit the online app gives error.  
 
 
 
 
-* <img align="left" src="/pictures/r_logo.png" width="50"> or start your local installation of **R** language and paste following code which automatically downloads prerequisties and starts app. Better option for big data, the only limit is local computer hardware:
+* <img align="left" src="/pictures/r_logo.png?raw=true" width="50"> or start your local installation of **R** language and paste following code which automatically downloads prerequisties and starts app. Better option for big data, the only limit is local computer hardware:
 ```
 install.packages(c("shiny", "readxl", "tidyverse", "dplyr", "vegan", "shinycssloaders", "ggrepel"))
 library(shiny)
