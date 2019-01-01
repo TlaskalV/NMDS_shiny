@@ -33,7 +33,7 @@ runGitHub("NMDS_shiny", "Vojczech")
 |  CL02   |  2.3    |   4.6  |   9.2   |    2.5  |   9.5  |   1.9  |
 |    CL03     |   4.5    |  4.9   |     1.1   |   1.0  |   0.3  |   1.6  |
 
-<img align="right" src="/pictures/upload_otu_table.png" width="200">
+<img align="left" src="/pictures/upload_otu_table.png" width="250">
 
 
 2. **Sample list** ([example](https://github.com/Vojczech/NMDS_shiny/blob/master/samples.xlsx)) with sample names (same names as in OTU table) and further environmental variables which are used for grouping in NMDS and `envfit` function. Again, choose sheet by its name.
@@ -46,17 +46,19 @@ runGitHub("NMDS_shiny", "Vojczech")
 |    sample4     |   2    |  spruce   |     2008   | 
 |    sample5     |   3    |  spruce   |     1997   | 
 
-<img align="right" src="/pictures/upload_sample_list.png" width="200">
+<img align="left" src="/pictures/upload_sample_list.png" width="250">
 
 You should now see the preview of the uploaded tables.
-<img align="right" src="/pictures/upload_preview.png" width="200">
+<img align="left" src="/pictures/upload_preview.png" width="250">
 
 
 ## Settings 
 
 1. After upload of the tables (.xlsx) it is necessary to choose the correct excel sheet by its name.
+<img align="left" src="/pictures/upload.png" width="250">
 
 2. It is possible to filter OTUs for NMDS construction by abundance treshold in certain number of samples.
+<img align="left" src="/pictures/settings_filter.png" width="250">
 
 3. Colours of points in NMDS
 
@@ -65,14 +67,21 @@ i) For colour coding of different groups of samples choose appropriate grouping 
 or
 
 ii) For gradient colour of sample sites according to environmental metadata choose "Values".
+<img align="left" src="/pictures/settings.png" width="250">
 
-4. Label points by sample ID or sample type or by other variable
+4. Label points by sample ID or sample type or by other variable. Label positions are iteratively found with great package [`ggrepel`](https://github.com/slowkow/ggrepel) by @slowkow.
+<img align="left" src="/pictures/settings_labels.png" width="250">
 
-5. [Hellinger transformation](http://mb3is.megx.net/gustame/reference/dissimilarity) as optional approach for lowering influence of rare OTUs.
+5. [Hellinger transformation](http://mb3is.megx.net/gustame/reference/dissimilarity) as optional approach for lowering influence of rare OTUs. This is quite common microbial data transformation.
 
 6. By selecting columns from your sample list, you can fit several environmental variables into NMDS using `envfit` function. **Avoid missing values in environmental variables**
+<img align="left" src="/pictures/envfit.png" width="250">
 
-7. It is possible to download .csv tables with NMDS values of each sample site for your own analysis as well as scores for environmental factors.
+7. It is possible to download 
++.csv tables with NMDS values of each sample site for your own analysis
++scores for environmental factors.
++final pdf with rendered ggplot
+<img align="left" src="/pictures/nmds.png" width="300">
 
-+ Memory on the shinyapps.io is limited, if server disconnects after upload try to reduce excel file size by deleting of unnecessary OTUs (singletons and rare ones).
+> Memory on the [shinyapps.io](https://labenvmicro.shinyapps.io/shiny_nmds/) is limited, if server disconnects after upload try to reduce excel file size by deleting of unnecessary OTUs (singletons and rare ones) or use your own local R installation as described in #where-to-try-app
  
