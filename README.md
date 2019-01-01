@@ -11,6 +11,8 @@ App for fast NMDS plots of sample sites based on microbial OTUs relative abundan
 
 ## Where to try app
 * <img align="left" src="/pictures/shiny_logo.png" width="50"> online web app hosted on [labenvmicro.shinyapps.io](https://labenvmicro.shinyapps.io/shiny_nmds/), this option is limited to 1GB of RAM memory. Therefore bigger data may take some time to analyze. For huge tables beyond memory limit the online app gives error.  
+
+
 * <img align="left" src="/pictures/r_logo.png" width="50"> or start your local installation of **R** language and paste following code which automatically downloads prerequisties and starts app. Better option for big data, the only limit is local computer hardware:
 ```
 install.packages(c("shiny", "readxl", "tidyverse", "dplyr", "vegan", "shinycssloaders", "ggrepel"))
