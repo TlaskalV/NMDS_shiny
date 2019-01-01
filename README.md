@@ -33,9 +33,11 @@ runGitHub("NMDS_shiny", "Vojczech")
 |  CL02   |  2.3    |   4.6  |   9.2   |    2.5  |   9.5  |   1.9  |
 |    CL03     |   4.5    |  4.9   |     1.1   |   1.0  |   0.3  |   1.6  |
 
+
 <kbd>
 <img align="left" src="/pictures/upload_otu_table.png" width="300">
 </kbd>
+
 
 2. **Sample list** ([example](https://github.com/Vojczech/NMDS_shiny/blob/master/samples.xlsx)) with sample names (same names as in OTU table) and further environmental variables which are used for grouping in NMDS and `envfit` function. Again, choose sheet by its name.
 
@@ -52,10 +54,14 @@ runGitHub("NMDS_shiny", "Vojczech")
 <img align="left" src="/pictures/upload_sample_list.png" width="300">
 </kbd>
 
+
 You should now see the preview of the uploaded tables.
+
+
 <kbd>
 <img align="left" src="/pictures/upload_preview.png" width="300">
 </kbd>
+
 
 ## Settings 
 
@@ -73,11 +79,11 @@ You should now see the preview of the uploaded tables.
 
 3. Colours of points in NMDS
 
-..* For colour coding of different groups of samples choose appropriate grouping factor (i.e. column with environmental variable in the sample list) and check "Factor".
+* For colour coding of different groups of samples choose appropriate grouping factor (i.e. column with environmental variable in the sample list) and check "Factor".
 
 or
 
-..* For gradient colour of sample sites according to environmental metadata choose "Values".
+* For gradient colour of sample sites according to environmental metadata choose "Values".
 <kbd>
 <img align="left" src="/pictures/settings.png" width="300">
 </kbd>
@@ -91,31 +97,23 @@ or
 
 5. [Hellinger transformation](http://mb3is.megx.net/gustame/reference/dissimilarity) as optional approach for lowering influence of rare OTUs. This is quite common microbial data transformation.
 
+
 6. By selecting columns from your sample list, you can fit several environmental variables into NMDS using `envfit` function. **Avoid missing values in environmental variables**
 <kbd>
 <img align="left" src="/pictures/envfit.png" width="300">
 </kbd>
 
 
-
-
-
-
-
-
-
-
-
 7. It is possible to download 
-... .csv tables with NMDS values of each sample site for your own analysis
+* .csv tables with NMDS values of each sample site for your own analysis
 
-...scores for environmental factors.
+* scores for environmental factors.
 
-...final pdf with rendered ggplot
+* final pdf with rendered ggplot
 <kbd>
 <img align="left" src="/pictures/nmds.png" width="400">
 </kbd>
 
-
+<p>
 > Memory on the [shinyapps.io](https://labenvmicro.shinyapps.io/shiny_nmds/) is limited, if server disconnects after upload try to reduce excel file size by deleting of unnecessary OTUs (singletons and rare ones) or use your own local R installation as described in [Where to try app](https://github.com/Vojczech/NMDS_shiny#where-to-try-app)
- 
+</p>
