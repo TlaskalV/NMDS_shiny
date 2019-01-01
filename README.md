@@ -114,6 +114,4 @@ or
 <img align="left" src="/pictures/nmds.png" width="400">
 </kbd>
 
-<p>
 > Memory on the [shinyapps.io](https://labenvmicro.shinyapps.io/shiny_nmds/) is limited, if server disconnects after upload try to reduce excel file size by deleting of unnecessary OTUs (singletons and rare ones) or use your own local R installation as described in [Where to try app](https://github.com/Vojczech/NMDS_shiny#where-to-try-app)
-</p>
