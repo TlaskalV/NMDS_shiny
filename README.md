@@ -1,7 +1,7 @@
 # NMDS shiny
 App for fast NMDS plots of sample sites based on microbial OTUs relative abundance.
 
-<img align="right" src="/pictures/nmds.png" width="300">
+<img align="right" src="/pictures/nmds.png" width="400">
 
 ## Table of contents
 
@@ -25,7 +25,7 @@ runGitHub("NMDS_shiny", "Vojczech")
 
 **Two excel** files/sheets are necessary:
 
-1. **OTU table** with values in percents. The first column contains OTU label, other columns contanin abundance values in separate samples. After upload of the file, call the correct sheet by its name. 
+1. **OTU table** ([example](https://github.com/Vojczech/NMDS_shiny/blob/master/otus_percent.xlsx)) with values in percents. The first column contains OTU label, other columns contanin abundance values in separate samples. After upload of the file, call the correct sheet by its name. 
 
 | OTU_label | sample1 |sample2 | sample3 | sample4 | sample5 | 
 |:---------:|:-------:|:------:|:-------:|:-------:|:-------:|
@@ -33,8 +33,10 @@ runGitHub("NMDS_shiny", "Vojczech")
 |  CL02   |  2.3    |   4.6  |   9.2   |    2.5  |   9.5  |   1.9  |
 |    CL03     |   4.5    |  4.9   |     1.1   |   1.0  |   0.3  |   1.6  |
 
+<img align="right" src="/pictures/upload_otu_table.png" width="200">
 
-2. **Sample list** with sample names (same names as in OTU table) and further environmental variables which are used for grouping in NMDS and `envfit` function. Again, choose sheet by its name.
+
+2. **Sample list** ([example](https://github.com/Vojczech/NMDS_shiny/blob/master/samples.xlsx)) with sample names (same names as in OTU table) and further environmental variables which are used for grouping in NMDS and `envfit` function. Again, choose sheet by its name.
 
 | sample_name | age_class |sampled_org | year | 
 |:---------:|:-------:|:------:|:-------:| 
@@ -44,7 +46,11 @@ runGitHub("NMDS_shiny", "Vojczech")
 |    sample4     |   2    |  spruce   |     2008   | 
 |    sample5     |   3    |  spruce   |     1997   | 
 
----
+<img align="right" src="/pictures/upload_sample_list.png" width="200">
+
+You should now see the preview of the uploaded tables.
+<img align="right" src="/pictures/upload_preview.png" width="200">
+
 
 ## Settings 
 
