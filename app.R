@@ -68,6 +68,9 @@ library(ggrepel)
                      c("Factor" = "Factor", "Numeric" = "Values"), 
                      inline = T,
                      selected = "Factor"),
+        checkboxInput("ellipses", 
+                      "Display ellipses - grouping by factor only", 
+                      value = FALSE),
         checkboxInput("sample_disp", 
                       "Display sample labels", 
                       value = FALSE),
@@ -92,7 +95,7 @@ library(ggrepel)
                        "Download final plot as .pdf"),
         tags$hr(style = "border-color: black;"),
         tags$br(),
-        a("Minimal examples of input excel files are available here", 
+        a("Minimal examples of input excel files are available on GitHub", 
           href = "https://github.com/Vojczech/NMDS_shiny", 
           target="_blank")
       ),
@@ -339,6 +342,9 @@ library(ggrepel)
       if(is.null(input$fitted_factors)){
       ggplot(data = mdsord, aes(y = NMDS_y, x = NMDS_x)) +
       geom_point(aes(colour = ggplot_factor), show.legend = TRUE, size = 4.5) +
+      {if (is.factor(mdsord$ggplot_factor)== TRUE && (input$ellipses)==TRUE) {
+        stat_ellipse(aes(colour = ggplot_factor), type = "t")    # add ellipses for factorial grouping
+      }} +
       {if (is.factor(mdsord$ggplot_factor)== TRUE) {
         scale_color_viridis_d() # color in the case of discrete values    
       } else {
