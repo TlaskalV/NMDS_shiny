@@ -3,9 +3,11 @@
 library(shiny)
 library(shinythemes)
 library(readxl)
+library(openxlsx)
 library(tidyverse)
 library(dplyr)
 library(vegan)
+library(tools)
 library(shinycssloaders)
 library(ggrepel)
 
@@ -76,23 +78,20 @@ library(ggrepel)
                       value = FALSE),
         uiOutput("label_factor"),
         downloadButton("downloadMultivar", 
-                       "Download table ready for NMDS"),
+                       "Table ready for NMDS"),
         tags$hr(style = "border-color: black;"),
         h4("5."),
         checkboxInput("hellinger", 
                       "Hellinger transformation of OTU table", 
                       value = FALSE),
         uiOutput("fitted"),
-        downloadButton("downloadScoresFinal", 
-                       "Download scores for env. variables as .csv"),
-        tags$br(),
         tags$br(),
         downloadButton("downloadMultivarFinal", 
-                       "Download final NMDS points as .csv"),
+                       "Table with NMDS results for external plotting"),
         tags$br(),
         tags$br(),
         downloadButton("downloadPlotFinal", 
-                       "Download final plot as .pdf"),
+                       "Download final plot as PDF"),
         tags$hr(style = "border-color: black;"),
         tags$br(),
         a("Minimal examples of input excel files are available on GitHub", 
@@ -188,10 +187,10 @@ library(ggrepel)
     # download
     output$downloadData <- downloadHandler(
       filename = function() {
-        paste(input$otu, ".csv", sep = "")
+        paste("original_table", input$otu, sep = "_")
       },
       content = function(file) {
-        write.csv(dataset_otu(), file, row.names = FALSE, sep = ";")
+        write.xlsx(dataset_otu(), file)
       })
     
     # ggplot grouping factor
@@ -235,10 +234,10 @@ library(ggrepel)
     # vegan matrix download
     output$downloadMultivar <- downloadHandler(
       filename = function() {
-        paste(input$otu, ".csv", sep = "")
+        paste("vegan_ready", input$otu, sep = "_")
       },
       content = function(file) {
-        write.csv(otus_multivar_for_plot(), file, row.names = TRUE, sep = ";")
+        write.xlsx(otus_multivar_for_plot(), file)
     })
     
     # NMDS without envfit
@@ -277,22 +276,14 @@ library(ggrepel)
       }
     })
     
-    # NMDS final matrix download
+    # NMDS final points and variables table download
     output$downloadMultivarFinal <- downloadHandler(
       filename = function() {
-        paste(input$otu, ".csv", sep = "")
+        paste("final_positions", input$otu, sep = "_")
       },
       content = function(file) {
-        write.csv(mdsord(), file, row.names = TRUE, sep = ";")
-      })
-    
-    # NMDS scores for env variables download
-    output$downloadScoresFinal <- downloadHandler(
-      filename = function() {
-        paste(input$otu, ".csv", sep = "")
-      },
-      content = function(file) {
-        write.csv(mdsord_fitted(), file, row.names = TRUE, sep = ";")
+        l <- list("nmds_points" = mdsord(), "variables_score" = mdsord_fitted())
+        write.xlsx(l, file)
       })
     
     output$grouping_factor <- renderUI({
@@ -384,7 +375,9 @@ library(ggrepel)
     
     # download NMDS
     output$downloadPlotFinal <- downloadHandler(
-      filename = function() { paste(input$otu, '.pdf', sep='') },
+      filename = function() { 
+        paste(tools::file_path_sans_ext(input$otu), '.pdf', sep='') 
+        },
       content = function(file) {
         ggsave(file, plot = mdsord_final(), device = "pdf", dpi = 300, height = 210, width = 297, units = "mm")
       }
