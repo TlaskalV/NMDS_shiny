@@ -117,7 +117,8 @@ library(ggrepel)
                      p(a("tidyverse", href = "https://www.tidyverse.org/", target="_blank")), 
                      p(a("vegan", href = "https://cran.r-project.org/web/packages/vegan/index.html", target="_blank")), 
                      p(a("ggrepel", href = "https://github.com/slowkow/ggrepel", target="_blank")), 
-                     p(a("shinycssloaders", href = "https://github.com/andrewsali/shinycssloaders", target="_blank")))
+                     p(a("shinycssloaders", href = "https://github.com/andrewsali/shinycssloaders", target="_blank")),
+                     p(a("openxlsx", href = "https://github.com/awalker89/openxlsx", target="_blank")))
                    )
           )
         )
