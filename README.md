@@ -97,7 +97,7 @@ or
 
 6. By selecting columns from your sample list, you can fit several environmental variables into NMDS using `envfit` function. **Avoid missing values in environmental variables**
 <div align="left">
-    <img src="/pictures/envfit.png?raw=true" width="400px"</img> 
+    <img src="/pictures/envfit.png?raw=true" width="300px"</img> 
 </div>
 
 
@@ -106,7 +106,7 @@ or
 
 * final pdf file with rendered ggplot
 <div align="left">
-    <img src="/pictures/nmds.png?raw=true" width="300px"</img> 
+    <img src="/pictures/nmds.png?raw=true" width="500px"</img> 
 </div>
 
 
