@@ -82,7 +82,7 @@ or
 
 * For gradient colour of sample sites according to environmental metadata choose "Values".
 <div align="left">
-    <img src="/pictures/settings.png?raw=true" width="400px"</img> 
+    <img src="/pictures/settings.png?raw=true" width="300px"</img> 
 </div>
 
 
@@ -106,7 +106,7 @@ or
 
 * final pdf file with rendered ggplot
 <div align="left">
-    <img src="/pictures/nmds.png?raw=true" width="500px"</img> 
+    <img src="/pictures/nmds.png?raw=true" width="300px"</img> 
 </div>
 
 
