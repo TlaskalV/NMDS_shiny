@@ -76,7 +76,7 @@ You should now see the preview of the uploaded tables.
 
 3. Colours of points in NMDS
 
-* For colour coding of different groups of samples choose appropriate grouping factor (i.e. column with environmental variable in the sample list) and check "Factor".
+* For colour coding of different groups of samples choose appropriate grouping factor (i.e. column with environmental variable in the sample list) and check "Factor". By checking **Display ellipses** ggplot will calculate ellipses for each group of points.
 
 or
 
@@ -92,7 +92,7 @@ or
 </div>
 
 
-5. [Hellinger transformation](http://mb3is.megx.net/gustame/reference/dissimilarity) as optional approach for lowering influence of rare OTUs. This is quite common microbial data transformation.
+5. [Hellinger transformation](http://mb3is.megx.net/gustame/reference/dissimilarity) as optional approach for lowering influence of rare OTUs. This is quite common microbial data transformation <cite>[Ramette, 2007][1]</cite>.
 
 
 6. By selecting columns from your sample list, you can fit several environmental variables into NMDS using `envfit` function. **Avoid missing values in environmental variables**
@@ -101,15 +101,15 @@ or
 </div>
 
 
-7. It is possible to download 
-* .csv tables with NMDS values of each sample site for your own analysis
+7. You can download 
+* Excel file with NMDS points coordinates and environmental variables scores. This is useful if you want to plot ordination in external program. 
 
-* scores for environmental factors.
-
-* final pdf with rendered ggplot
+* final pdf file with rendered ggplot
 <div align="left">
     <img src="/pictures/nmds.png?raw=true" width="500px"</img> 
 </div>
 
 
 > Memory on the [shinyapps.io](https://labenvmicro.shinyapps.io/shiny_nmds/) is limited, if server disconnects after upload try to reduce excel file size by deleting of unnecessary OTUs (singletons and rare ones) or use your own local R installation as described in [Where to try app](https://github.com/Vojczech/NMDS_shiny#where-to-try-app)
+
+[1]Ramette A. Multivariate analyses in microbial ecology. FEMS Microbiol Ecol 2007;62:142–60.
