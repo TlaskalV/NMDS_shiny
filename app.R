@@ -350,6 +350,9 @@ library(ggrepel)
       } else {
         ggplot(data = mdsord, aes(y = NMDS_y, x = NMDS_x)) +
           geom_point(aes(colour = ggplot_factor), show.legend = TRUE, size = 4.5) +
+          {if (is.factor(mdsord$ggplot_factor)== TRUE && (input$ellipses)==TRUE) {
+            stat_ellipse(aes(colour = ggplot_factor), type = "t")    # add ellipses for factorial grouping
+          }} +
           {if (is.factor(mdsord$ggplot_factor)== TRUE) {
             scale_color_viridis_d() # color in the case of discrete values    
           } else {
