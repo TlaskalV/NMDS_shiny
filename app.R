@@ -81,9 +81,12 @@ library(ggrepel)
                        "Table ready for NMDS"),
         tags$hr(style = "border-color: black;"),
         h4("5."),
-        checkboxInput("hellinger", 
-                      "Hellinger transformation of OTU table", 
-                      value = FALSE),
+        radioButtons("dissimilarity",
+                     "Dissimilarity matrix",
+                     c("Hellinger distance" = "hell", "Bray-Curtis" = "bray"),
+                     inline = T,
+                     selected = "hell"
+                     ),
         uiOutput("fitted"),
         tags$br(),
         downloadButton("downloadMultivarFinal", 
@@ -244,12 +247,12 @@ library(ggrepel)
     # NMDS without envfit
     mdsord <- reactive({
       #otus_multivar_for_plot <- otus_multivar_for_plot()
-      if(input$hellinger) {
+      if(input$dissimilarity == "hell") {
       set.seed(31)
-      mdsord = metaMDS(comm = decostand(otus_multivar_for_plot(), "hellinger"), distance = "bray", trace = FALSE, k = 2, trymax = 200)
+      mdsord <- metaMDS(comm = decostand(otus_multivar_for_plot(), "hellinger"), distance = "euclidean", trace = FALSE, k = 2, trymax = 200, autotransform = TRUE)
       } else {
       set.seed(31)
-      mdsord = metaMDS(comm = otus_multivar_for_plot(), distance = "bray", trace = FALSE, k = 2, trymax = 200)
+      mdsord <- metaMDS(comm = otus_multivar_for_plot(), distance = "bray", trace = FALSE, k = 2, trymax = 200, autotransform = TRUE)
       }
       NMDS_data <- dataset_samples()
       ggplot_factor <- as.data.frame(ggplot_factor())
@@ -261,12 +264,12 @@ library(ggrepel)
     
     # NMDS envfit included, important are same parametres and set.seed
     mdsord_fitted <- reactive({
-      if(input$hellinger) {
+      if(input$dissimilarity == "hell") {
         set.seed(31)
-        mdsord = metaMDS(comm = decostand(otus_multivar_for_plot(), "hellinger"), distance = "bray", trace = FALSE, k = 2, trymax = 200)
+        mdsord <- metaMDS(comm = decostand(otus_multivar_for_plot(), "hellinger"), distance = "euclidean", trace = FALSE, k = 2, trymax = 200, autotransform = TRUE)
       } else {
         set.seed(31)
-        mdsord = metaMDS(comm = otus_multivar_for_plot(), distance = "bray", trace = FALSE, k = 2, trymax = 200)
+        mdsord <- metaMDS(comm = otus_multivar_for_plot(), distance = "bray", trace = FALSE, k = 2, trymax = 200, autotransform = TRUE)
       }
       if(is.null(input$fitted_factors)){
       } else {
