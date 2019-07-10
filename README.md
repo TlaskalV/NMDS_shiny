@@ -94,7 +94,7 @@ or
 
 5. Hellinger distance or Bray-Curtis dissimilarity are two optional [dissimilarity measures](https://mb3is.megx.net/gustame/reference/dissimilarity) which can be used. Default is Hellinger distance based on <cite>[Legendre, 2013][1]</cite>.
 <div align="left">
-    <img src="/pictures/dismatrix.png?raw=true" width="200px"</img> 
+    <img src="/pictures/dismatrix.png?raw=true" width="300px"</img> 
 </div>
 
 6. By selecting columns from your sample list, you can fit several environmental variables into NMDS using `envfit` function. **Avoid missing values in environmental variables**
