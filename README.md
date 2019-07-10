@@ -67,12 +67,14 @@ You should now see the preview of the uploaded tables.
     <img src="/pictures/upload.png?raw=true" width="400px"</img> 
 </div>
 
+***
 
 2. It is possible to filter OTUs for NMDS construction by abundance treshold in certain number of samples.
 <div align="left">
     <img src="/pictures/settings_filter.png?raw=true" width="400px"</img> 
 </div>
 
+***
 
 3. Colours of points in NMDS
 
@@ -85,23 +87,28 @@ or
     <img src="/pictures/settings.png?raw=true" width="300px"</img> 
 </div>
 
+***
 
 4. Label points by sample ID or sample type or by other variable. Label positions are iteratively found with great package [`ggrepel`](https://github.com/slowkow/ggrepel) by [@slowkow](https://github.com/slowkow).
 <div align="left">
     <img src="/pictures/settings_labels.png?raw=true" width="400px"</img> 
 </div>
 
+***
 
 5. Hellinger distance or Bray-Curtis dissimilarity are two optional [dissimilarity measures](https://mb3is.megx.net/gustame/reference/dissimilarity) which can be used. Default is Hellinger distance based on <cite>[Legendre, 2013][1]</cite>.
 <div align="left">
     <img src="/pictures/dismatrix.png?raw=true" width="300px"</img> 
 </div>
 
+***
+
 6. By selecting columns from your sample list, you can fit several environmental variables into NMDS using `envfit` function. **Avoid missing values in environmental variables**
 <div align="left">
     <img src="/pictures/envfit.png?raw=true" width="300px"</img> 
 </div>
 
+***
 
 7. You can download 
 * Excel file with NMDS points coordinates and environmental variables scores. This is useful if you want to plot ordination in external program. 
@@ -111,6 +118,7 @@ or
     <img src="/pictures/nmds.png?raw=true" width="500px"</img> 
 </div>
 
+***
 
 > Memory on the [shinyapps.io](https://labenvmicro.shinyapps.io/shiny_nmds/) is limited, if server disconnects after upload try to reduce excel file size by deleting of unnecessary OTUs (singletons and rare ones) or use your own local R installation as described in [Where to try app](https://github.com/Vojczech/NMDS_shiny#where-to-try-app)
 </div>
