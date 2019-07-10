@@ -92,8 +92,10 @@ or
 </div>
 
 
-5. [Hellinger transformation](http://mb3is.megx.net/gustame/reference/dissimilarity) as optional approach for lowering influence of rare OTUs. This is quite common microbial data transformation <cite>[Ramette, 2007][1]</cite>.
-
+5. Hellinger distance or Bray-Curtis dissimilarity are two optional [dissimilarity measures](https://mb3is.megx.net/gustame/reference/dissimilarity) which can be used. Default is Hellinger distance based on <cite>[Legendre, 2013][1]</cite>.
+<div align="left">
+    <img src="/pictures/dismatrix.png?raw=true" width="200px"</img> 
+</div>
 
 6. By selecting columns from your sample list, you can fit several environmental variables into NMDS using `envfit` function. **Avoid missing values in environmental variables**
 <div align="left">
@@ -111,5 +113,6 @@ or
 
 
 > Memory on the [shinyapps.io](https://labenvmicro.shinyapps.io/shiny_nmds/) is limited, if server disconnects after upload try to reduce excel file size by deleting of unnecessary OTUs (singletons and rare ones) or use your own local R installation as described in [Where to try app](https://github.com/Vojczech/NMDS_shiny#where-to-try-app)
+</div>
 
-[1]Ramette A. Multivariate analyses in microbial ecology. FEMS Microbiol Ecol 2007;62:142–60.
+[1]Legendre P, De Cáceres M. Beta diversity as the variance of community data: Dissimilarity coefficients and partitioning. Ecol Lett 2013;16:951–63.
