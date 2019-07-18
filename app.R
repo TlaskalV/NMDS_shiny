@@ -207,7 +207,8 @@ library(ggrepel)
     # filtr percentage
     filtered_titles <- reactive({
       otus_percent <- dataset_otu()
-      tbl_df(otus_percent) %>% gather(sample, per, (2:ncol(otus_percent))) %>% 
+      tbl_df(otus_percent) %>% 
+        gather(sample, per, (2:ncol(otus_percent))) %>% 
         group_by_at(c(1,2)) %>%  
         filter(per >= input$percent_treshold) %>%
         ungroup() %>% 
@@ -221,7 +222,8 @@ library(ggrepel)
     otus_multivar <- reactive({
       filtered_titles_list <- filtered_titles()
       otus_percent <- dataset_otu()
-      tbl_df(otus_percent) %>% gather(sample, per, (2:ncol(otus_percent))) %>%
+      tbl_df(otus_percent) %>% 
+        gather(sample, per, (2:ncol(otus_percent))) %>%
         right_join(filtered_titles_list) %>% 
         spread(sample, per) 
     })
