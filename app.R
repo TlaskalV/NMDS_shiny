@@ -249,10 +249,10 @@ library(ggrepel)
       #otus_multivar_for_plot <- otus_multivar_for_plot()
       if(input$dissimilarity == "hell") {
       set.seed(31)
-      mdsord <- metaMDS(comm = decostand(otus_multivar_for_plot(), "hellinger"), distance = "euclidean", trace = FALSE, k = 2, trymax = 200, autotransform = TRUE)
+      mdsord <- metaMDS(comm = decostand(otus_multivar_for_plot(), "hellinger"), distance = "euclidean", trace = FALSE, k = 2, trymax = 200, autotransform = FALSE)
       } else {
       set.seed(31)
-      mdsord <- metaMDS(comm = otus_multivar_for_plot(), distance = "bray", trace = FALSE, k = 2, trymax = 200, autotransform = TRUE)
+      mdsord <- metaMDS(comm = otus_multivar_for_plot(), distance = "bray", trace = FALSE, k = 2, trymax = 200, autotransform = FALSE)
       }
       NMDS_data <- dataset_samples()
       ggplot_factor <- as.data.frame(ggplot_factor())
@@ -266,10 +266,10 @@ library(ggrepel)
     mdsord_fitted <- reactive({
       if(input$dissimilarity == "hell") {
         set.seed(31)
-        mdsord <- metaMDS(comm = decostand(otus_multivar_for_plot(), "hellinger"), distance = "euclidean", trace = FALSE, k = 2, trymax = 200, autotransform = TRUE)
+        mdsord <- metaMDS(comm = decostand(otus_multivar_for_plot(), "hellinger"), distance = "euclidean", trace = FALSE, k = 2, trymax = 200, autotransform = FALSE)
       } else {
         set.seed(31)
-        mdsord <- metaMDS(comm = otus_multivar_for_plot(), distance = "bray", trace = FALSE, k = 2, trymax = 200, autotransform = TRUE)
+        mdsord <- metaMDS(comm = otus_multivar_for_plot(), distance = "bray", trace = FALSE, k = 2, trymax = 200, autotransform = FALSE)
       }
       if(is.null(input$fitted_factors)){
       } else {
