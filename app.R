@@ -50,7 +50,7 @@ library(ggrepel)
         h4("3."),
         sliderInput("percent_treshold", 
                     "Filter OTUs by percentage per sample", 
-                    min = 0.5, 
+                    min = 0, 
                     max = 100, c(3), 
                     post = "%", 
                     step = 0.5),
