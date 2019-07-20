@@ -232,8 +232,6 @@ library(ggrepel)
     otus_multivar_for_plot <- reactive({
       filtered_titles_list <- filtered_titles()
       otus_multivar <- otus_multivar()
-      #cluster <- otus_multivar[,1]
-      #rownames(as.data.frame(otus_multivar)) = cluster
       otus_multivar <- gather(otus_multivar, sample, perc, 2:ncol(otus_multivar)) %>% 
         spread(1, perc) %>% 
         tibble::column_to_rownames(var = "sample")
@@ -250,7 +248,6 @@ library(ggrepel)
     
     # NMDS without envfit
     mdsord <- reactive({
-      #otus_multivar_for_plot <- otus_multivar_for_plot()
       if(input$dissimilarity == "hell") {
       set.seed(31)
       mdsord <- metaMDS(comm = decostand(otus_multivar_for_plot(), "hellinger"), distance = "euclidean", trace = FALSE, k = 2, trymax = 200, autotransform = FALSE)
