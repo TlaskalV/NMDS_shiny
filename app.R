@@ -159,8 +159,7 @@ library(ggrepel)
         return(NULL)
       
       readxl::read_excel(infile$datapath, sheet = input$sheet_samples, col_names = input$header_samples)
-      
-    })
+      })
     
     # total number of samples
     samples_count <- reactive({
@@ -230,10 +229,12 @@ library(ggrepel)
     
     # vegan matrix 
     otus_multivar_for_plot <- reactive({
-      filtered_titles_list <- filtered_titles()
+      dataset_samples <- dataset_samples()
       otus_multivar <- otus_multivar()
+      dataset_samples
       otus_multivar <- gather(otus_multivar, sample, perc, 2:ncol(otus_multivar)) %>% 
-        spread(1, perc) %>% 
+        spread(1, perc) %>% # this function orders NMDS input table according to sample names, must be consistent with dataset_samples() order
+        arrange((match(sample, dataset_samples$sample_name))) %>% # ensures same order of NMDS input as dataset_samples() table but needs "sample_name" as column name 
         tibble::column_to_rownames(var = "sample")
     })
      
