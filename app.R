@@ -234,7 +234,9 @@ library(ggrepel)
       otus_multivar <- otus_multivar()
       #cluster <- otus_multivar[,1]
       #rownames(as.data.frame(otus_multivar)) = cluster
-      otus_multivar <- t(otus_multivar[ , 2:ncol(otus_multivar)])
+      otus_multivar <- gather(otus_multivar, sample, perc, 2:ncol(otus_multivar)) %>% 
+        spread(1, perc) %>% 
+        tibble::column_to_rownames(var = "sample")
     })
      
     # vegan matrix download
@@ -243,7 +245,7 @@ library(ggrepel)
         paste("vegan_ready", input$otu, sep = "_")
       },
       content = function(file) {
-        write.xlsx(otus_multivar_for_plot(), file)
+        write.xlsx(otus_multivar_for_plot(), file, colNames = TRUE, rowNames = TRUE)
     })
     
     # NMDS without envfit
