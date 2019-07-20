@@ -114,7 +114,7 @@ library(ggrepel)
           tabPanel("About",
                    h4("Plots for fast insight into community data"),
                    p("Visit", a("this link", href = "https://github.com/Vojczech/NMDS_shiny", target="_blank"), "for brief tutorial."),
-                   p("Tested on real data from the paper", a("Tláskal et al., 2017.", href = "https://academic.oup.com/femsec/article-abstract/93/12/fix157/4604780", target = "_blank"), "App is producing same results as metaMDS and envfit functions from the vegan package alone. Bray-Curtis dissimilarity is used. Hellinger transformation of the data is optional."),
+                   p("Tested on real data from the paper", a("Tláskal et al., 2017.", href = "https://academic.oup.com/femsec/article-abstract/93/12/fix157/4604780", target = "_blank"), "App is producing same results as metaMDS and envfit functions from the vegan package alone."),
                    p("Please note that apps hosted for free on shinyapps.io are limited to 1GB of memory. Therefore loading of larger OTU tables may take a while. If server disconnects after upload try to decrease size of excel file by e.g. deleting of singleton OTUs."),
                    p("packages:", 
                      p(a("tidyverse", href = "https://www.tidyverse.org/", target="_blank")), 
