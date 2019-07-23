@@ -124,10 +124,7 @@ or
 > Memory on the [shinyapps.io](https://labenvmicro.shinyapps.io/shiny_nmds/) is limited, if server disconnects after upload try to reduce excel file size by deleting of unnecessary OTUs (singletons and rare ones) or use your own local R installation as described in [Where to try app](https://github.com/Vojczech/NMDS_shiny#where-to-try-app)
 </div>
 
-***
-
 ## References
-----------
 
 [1]Legendre P, De Cáceres M. Beta diversity as the variance of community data: Dissimilarity coefficients and partitioning. Ecol Lett 2013;16:951–63.
 
@@ -147,37 +144,47 @@ This app is driven by following awesome packages.
 -   tools (R Core Team 2019b)
 -   vegan (Oksanen et al. 2019)
 
-Chang, W. 2018. Shinythemes: Themes for shiny.
+Chang, Winston. 2018. *Shinythemes: Themes for Shiny*.
+<https://CRAN.R-project.org/package=shinythemes>.
 
-Chang, W., J. Cheng, J. Allaire, Y. Xie, and J. McPherson. 2019. Shiny:
-Web application framework for r.
+Chang, Winston, Joe Cheng, JJ Allaire, Yihui Xie, and Jonathan
+McPherson. 2019. *Shiny: Web Application Framework for R*.
+<https://CRAN.R-project.org/package=shiny>.
 
-Müller, K., and H. Wickham. 2019. Tibble: Simple data frames.
+Müller, Kirill, and Hadley Wickham. 2019. *Tibble: Simple Data Frames*.
+<https://CRAN.R-project.org/package=tibble>.
 
-Neuwirth, E. 2014. RColorBrewer: ColorBrewer palettes.
+Neuwirth, Erich. 2014. *RColorBrewer: ColorBrewer Palettes*.
+<https://CRAN.R-project.org/package=RColorBrewer>.
 
-Oksanen, J., F. G. Blanchet, M. Friendly, R. Kindt, P. Legendre, D.
-McGlinn, P. R. Minchin, R. B. O’Hara, G. L. Simpson, P. Solymos, M. H.
-H. Stevens, E. Szoecs, and H. Wagner. 2019. Vegan: Community ecology
-package.
+Oksanen, Jari, F. Guillaume Blanchet, Michael Friendly, Roeland Kindt,
+Pierre Legendre, Dan McGlinn, Peter R. Minchin, et al. 2019. *Vegan:
+Community Ecology Package*. <https://CRAN.R-project.org/package=vegan>.
 
-R Core Team. 2019a. R: A language and environment for statistical
-computing. R Foundation for Statistical Computing, Vienna, Austria.
+R Core Team. 2019a. *R: A Language and Environment for Statistical
+Computing*. Vienna, Austria: R Foundation for Statistical Computing.
+<https://www.R-project.org/>.
 
-R Core Team. 2019b. R: A language and environment for statistical
-computing. R Foundation for Statistical Computing, Vienna, Austria.
+———. 2019b. *R: A Language and Environment for Statistical Computing*.
+Vienna, Austria: R Foundation for Statistical Computing.
+<https://www.R-project.org/>.
 
-Sali, A. 2017. Shinycssloaders: Add css loading animations to ’shiny’
-outputs.
+Sali, Andras. 2017. *Shinycssloaders: Add Css Loading Animations to
+’Shiny’ Outputs*. <https://CRAN.R-project.org/package=shinycssloaders>.
 
-Slowikowski, K. 2019. Ggrepel: Automatically position non-overlapping
-text labels with ’ggplot2’.
+Slowikowski, Kamil. 2019. *Ggrepel: Automatically Position
+Non-Overlapping Text Labels with ’Ggplot2’*.
+<https://CRAN.R-project.org/package=ggrepel>.
 
-Walker, A. 2019. Openxlsx: Read, write and edit xlsx files.
+Walker, Alexander. 2019. *Openxlsx: Read, Write and Edit Xlsx Files*.
+<https://CRAN.R-project.org/package=openxlsx>.
 
-Wickham, H. 2017. Tidyverse: Easily install and load the ’tidyverse’.
+Wickham, Hadley. 2017. *Tidyverse: Easily Install and Load the
+’Tidyverse’*. <https://CRAN.R-project.org/package=tidyverse>.
 
-Wickham, H., and J. Bryan. 2019. Readxl: Read excel files.
+Wickham, Hadley, and Jennifer Bryan. 2019. *Readxl: Read Excel Files*.
+<https://CRAN.R-project.org/package=readxl>.
 
-Wickham, H., R. François, L. Henry, and K. Müller. 2019. Dplyr: A
-grammar of data manipulation.
+Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2019.
+*Dplyr: A Grammar of Data Manipulation*.
+<https://CRAN.R-project.org/package=dplyr>.
