@@ -8,6 +8,7 @@ App for fast NMDS plots of sample sites based on microbial OTUs relative abundan
 * [Where to try app](#where-to-try-app)
 * [How to upload data](#data-upload)
 * [Settings](#settings)
+* [References](#references)
 
 ## Where to try app
 * <img align="left" src="/pictures/shiny_logo.png?raw=true" width="50"> online web app hosted on [labenvmicro.shinyapps.io](https://labenvmicro.shinyapps.io/shiny_nmds/), this option is limited to 1GB of RAM memory. Therefore bigger data may take some time to analyze. For huge tables beyond memory limit the online app gives error.  
@@ -123,4 +124,60 @@ or
 > Memory on the [shinyapps.io](https://labenvmicro.shinyapps.io/shiny_nmds/) is limited, if server disconnects after upload try to reduce excel file size by deleting of unnecessary OTUs (singletons and rare ones) or use your own local R installation as described in [Where to try app](https://github.com/Vojczech/NMDS_shiny#where-to-try-app)
 </div>
 
+***
+
+## References
+----------
+
 [1]Legendre P, De Cáceres M. Beta diversity as the variance of community data: Dissimilarity coefficients and partitioning. Ecol Lett 2013;16:951–63.
+
+This app is driven by following awesome packages.
+
+-   base (R Core Team 2019a)
+-   dplyr (Wickham et al. 2019)
+-   ggrepel (Slowikowski 2019)
+-   openxlsx (Walker 2019)
+-   RColorBrewer (Neuwirth 2014)
+-   readxl (Wickham and Bryan 2019)
+-   shiny (Chang et al. 2019)
+-   shinycssloaders (Sali 2017)
+-   shinythemes (Chang 2018)
+-   tibble (Müller and Wickham 2019)
+-   tidyverse (Wickham 2017)
+-   tools (R Core Team 2019b)
+-   vegan (Oksanen et al. 2019)
+
+Chang, W. 2018. Shinythemes: Themes for shiny.
+
+Chang, W., J. Cheng, J. Allaire, Y. Xie, and J. McPherson. 2019. Shiny:
+Web application framework for r.
+
+Müller, K., and H. Wickham. 2019. Tibble: Simple data frames.
+
+Neuwirth, E. 2014. RColorBrewer: ColorBrewer palettes.
+
+Oksanen, J., F. G. Blanchet, M. Friendly, R. Kindt, P. Legendre, D.
+McGlinn, P. R. Minchin, R. B. O’Hara, G. L. Simpson, P. Solymos, M. H.
+H. Stevens, E. Szoecs, and H. Wagner. 2019. Vegan: Community ecology
+package.
+
+R Core Team. 2019a. R: A language and environment for statistical
+computing. R Foundation for Statistical Computing, Vienna, Austria.
+
+R Core Team. 2019b. R: A language and environment for statistical
+computing. R Foundation for Statistical Computing, Vienna, Austria.
+
+Sali, A. 2017. Shinycssloaders: Add css loading animations to ’shiny’
+outputs.
+
+Slowikowski, K. 2019. Ggrepel: Automatically position non-overlapping
+text labels with ’ggplot2’.
+
+Walker, A. 2019. Openxlsx: Read, write and edit xlsx files.
+
+Wickham, H. 2017. Tidyverse: Easily install and load the ’tidyverse’.
+
+Wickham, H., and J. Bryan. 2019. Readxl: Read excel files.
+
+Wickham, H., R. François, L. Henry, and K. Müller. 2019. Dplyr: A
+grammar of data manipulation.
