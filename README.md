@@ -161,12 +161,8 @@ Oksanen, Jari, F. Guillaume Blanchet, Michael Friendly, Roeland Kindt,
 Pierre Legendre, Dan McGlinn, Peter R. Minchin, et al. 2019. *Vegan:
 Community Ecology Package*. <https://CRAN.R-project.org/package=vegan>.
 
-R Core Team. 2019a. *R: A Language and Environment for Statistical
+R Core Team. 2019ab. *R: A Language and Environment for Statistical
 Computing*. Vienna, Austria: R Foundation for Statistical Computing.
-<https://www.R-project.org/>.
-
-R Core Team. 2019a. 2019b. *R: A Language and Environment for Statistical Computing*.
-Vienna, Austria: R Foundation for Statistical Computing.
 <https://www.R-project.org/>.
 
 Sali, Andras. 2017. *Shinycssloaders: Add Css Loading Animations to
