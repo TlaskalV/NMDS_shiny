@@ -10,7 +10,7 @@ library(vegan)
 library(tools)
 library(shinycssloaders)
 library(ggrepel)
-
+library(RColorBrewer)
 
 #### ui ####
   ui <- fluidPage(
@@ -343,7 +343,7 @@ library(ggrepel)
         stat_ellipse(aes(colour = ggplot_factor), type = "t")    # add ellipses for factorial grouping
       }} +
       {if (is.factor(mdsord$ggplot_factor)== TRUE) {
-        scale_color_viridis_d() # color in the case of discrete values    
+        scale_colour_brewer(palette = "Paired", type = "div") # color in the case of discrete values    
       } else {
         scale_color_viridis_c() # color in the case of continuous values
       }} +
@@ -359,7 +359,7 @@ library(ggrepel)
             stat_ellipse(aes(colour = ggplot_factor), type = "t")    # add ellipses for factorial grouping
           }} +
           {if (is.factor(mdsord$ggplot_factor)== TRUE) {
-            scale_color_viridis_d() # color in the case of discrete values    
+            scale_colour_brewer(palette = "Paired", type = "div") # color in the case of discrete values    
           } else {
             scale_color_viridis_c() # color in the case of continuous values
           }} +
