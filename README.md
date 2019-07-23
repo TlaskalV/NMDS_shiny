@@ -165,7 +165,7 @@ R Core Team. 2019a. *R: A Language and Environment for Statistical
 Computing*. Vienna, Austria: R Foundation for Statistical Computing.
 <https://www.R-project.org/>.
 
-———. 2019b. *R: A Language and Environment for Statistical Computing*.
+R Core Team. 2019a. 2019b. *R: A Language and Environment for Statistical Computing*.
 Vienna, Austria: R Foundation for Statistical Computing.
 <https://www.R-project.org/>.
 
