@@ -17,7 +17,7 @@ App for fast NMDS plots of sample sites based on microbial OTUs relative abundan
 
 * <img align="left" src="/pictures/r_logo.png?raw=true" width="50"> or start your local installation of **R** language and paste following code which automatically downloads prerequisties and starts app. Better option for big data, the only limit is local computer hardware:
 ```
-install.packages(c("shiny", "shinythemes", "openxlsx", "tidyverse", "vegan", "shinycssloaders", "ggrepel"))
+install.packages(c("shiny", "shinythemes", "openxlsx", "tidyverse", "vegan", "shinycssloaders", "ggrepel", "RColorBrewer"))
 library(shiny)
 runGitHub("NMDS_shiny", "Vojczech") 
 ```
